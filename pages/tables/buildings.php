@@ -124,7 +124,8 @@
                                             ?>
                                                 <tr>
                                                     <td><?php echo $index; $index++; ?></td>
-                                                    <td><?php echo $row['bld_name']; ?></td>
+                                                    <?php if($branch_id == 1) echo '<td><a href="' . WEB_URL . 'pages/tables/apartments.php?building_id=' . $row['bldid'] . '">'. $row['bld_name'] .'</a></td>' ?>
+                                                    <?php if($branch_id != 1) echo '<td>' . $row['bld_name'] . '</td>' ?>
                                                     <td><?php echo $row['bld_address']; ?></td>
                                                     <td><?php echo $row['o_name']; ?></td>
                                                     <td>

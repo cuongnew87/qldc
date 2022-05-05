@@ -182,7 +182,7 @@ $data = mysqli_fetch_array($result);
                         <div class="user-block">
                           <img class="img-circle img-bordered-sm" src="<?php echo WEB_URL ?>dist/img/tennants/<?php echo $row['rsd_image'] ?>" alt="user image">
                           <span class="username">
-                            <a href="#"><?php echo $row['rsd_name']; ?></a>
+                            <a href="<?php echo WEB_URL ?>pages/tables/detail/tennant.php?tennant_id=<?php echo $row['rsdid']; ?>"><?php echo $row['rsd_name']; ?></a>
                           </span>
                           <span class="description"><?php echo $row['rsd_relationship']; ?></span>
                         </div>
