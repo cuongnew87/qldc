@@ -116,15 +116,9 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?php echo WEB_URL ?>pages/reports/tenants.php" class="nav-link <?php activeLi('pages/reports/tenants.php') ?>">
+                            <a href="<?php echo WEB_URL ?>pages/reports/complains.php" class="nav-link <?php activeLi('pages/reports/complains.php') ?>">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Dân cư</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo WEB_URL ?>pages/reports/apartments.php" class="nav-link <?php activeLi('pages/reports/apartments.php') ?>">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Căn hộ</p>
+                                <p>Khiếu nại</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -137,7 +131,7 @@
                 </li>
                 <li class="nav-header">KHÁC</li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="<?php echo WEB_URL ?>pages/others/login.html" class="nav-link">
                     <i class="nav-icon far fa-circle"></i>
                     <p class="text">Đăng xuất</p>
                     </a>

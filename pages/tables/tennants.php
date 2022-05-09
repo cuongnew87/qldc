@@ -25,9 +25,9 @@
             }
 
             var selectBranch = document.getElementById("selectBranch");
-                selectBranch.value = branch_id;
-                var text = selectBranch.options[selectBranch.selectedIndex].text;
-                document.getElementById("branchName").innerHTML = text;
+            selectBranch.value = branch_id;
+            var text = selectBranch.options[selectBranch.selectedIndex].text;
+            document.getElementById("branchName").innerHTML = text;
         };
     </script>
     <div class="wrapper">
@@ -82,7 +82,15 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Danh sách cư dân thuộc <span id="branchName"><span></h3>
+                                    <!--Card image-->
+                                    <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+                                        <h3 class="card-title">Danh sách cư dân thuộc <span id="branchName"><span></h3>
+
+                                        <div>
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm mới cư dân</button>
+                                        </div>
+
+                                    </div>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
@@ -126,18 +134,18 @@
                                                 // output data of each row
                                                 while ($row = $result->fetch_assoc()) {
                                             ?>
-                                                <tr>
-                                                    <td><?php echo $index; $index++; ?></td>
-                                                    <td><?php echo $row['rsd_name']; ?></td>
-                                                    <td><?php echo $row['bld_name']; ?></td>
-                                                    <td><?php echo $row['rsd_phone']; ?></td>
-                                                    <td><?php echo $row['rsd_dob']; ?></td>
-                                                    <td>
-                                                        <a class="btn btn-success ams_btn_special" data-toggle="tooltip" href="<?php echo WEB_URL ?>pages/tables/detail/tennant.php?tennant_id=<?php echo $row['rsdid']; ?>"><i class="fa fa-eye"></i></a>
-                                                        <a class="btn btn-warning ams_btn_special" data-toggle="tooltip" href="#" data-original-title="Edit"><i class="fa fa-pen"></i></a>
-                                                        <a class="btn btn-danger ams_btn_special" data-toggle="tooltip" onclick="deleteFloor(12);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash"></i></a>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td><?php echo $index;
+                                                            $index++; ?></td>
+                                                        <td><?php echo $row['rsd_name']; ?></td>
+                                                        <td><?php echo $row['bld_name']; ?></td>
+                                                        <td><?php echo $row['rsd_phone']; ?></td>
+                                                        <td><?php echo $row['rsd_dob']; ?></td>
+                                                        <td>
+                                                            <a class="btn btn-success ams_btn_special" data-toggle="tooltip" href="<?php echo WEB_URL ?>pages/tables/detail/tennant.php?tennant_id=<?php echo $row['rsdid']; ?>"><i class="fa fa-eye"></i></a>
+                                                            <a class="btn btn-danger ams_btn_special" data-toggle="tooltip" onclick="deleteFloor(12);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash"></i></a>
+                                                        </td>
+                                                    </tr>
                                             <?php
                                                 }
                                             }
@@ -159,6 +167,79 @@
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Thêm mới dân cư
+                        </h5>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                ×
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="name">Họ và tên</label>
+                                <input id="name" type="text" name="name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input id="email" type="email" name="email" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Số điện thoại</label>
+                                <input id="phone" type="phone" name="phone" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Giới tính</label>
+                                <div class="col-sm-10 d-flex">
+                                    <div class="form-check m-1">
+                                        <input class="form-check-input" value="Nam" type="radio" name="gender" checked>
+                                        <label class="form-check-label">Nam</label>
+                                    </div>
+                                    <div class="form-check m-1">
+                                        <input class="form-check-input" value="Nữ" type="radio" name="gender">
+                                        <label class="form-check-label">Nữ</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="identity">Số căn cước công dân</label>
+                                <input id="identity" type="text" name="identity" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dob">Ngày sinh</label>
+                                <input id="dob" type="date" name="dob" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Hình ảnh (ảnh 128 x 128 px)</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" style="cursor: pointer;" class="custom-file-input" ID="FileUpload" onchange="readURL(this)" />
+                                        <label class="custom-file-label" id="file-name">Chọn hình ảnh</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                            <button type="button" class="btn btn-success" onclick="addNewTennant()">Thêm mới</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <?php
         include('../../components/footer.php');
         ?>
@@ -194,6 +275,75 @@
             var value = selectBranch.options[selectBranch.selectedIndex].value;
             document.getElementById("branchName").innerHTML = text;
             window.location.replace("<?php echo WEB_URL ?>pages/tables/tennants.php?branch_id=" + value);
+        }
+
+        var fileName = 'user-default.png';
+        var file = null;
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                fileName = input.files[0].name;
+                file = input.files[0];
+
+                document.getElementById("file-name").innerHTML = input.files[0].name;
+            }
+        }
+
+        function addNewTennant() {
+
+            $.ajax({
+                url: "add_tennant.php",
+                type: "POST",
+                data: {
+                    tennantName: document.getElementById("name").value,
+                    tennantEmail: document.getElementById("email").value,
+                    tennantPhone: document.getElementById("phone").value,
+                    tennantGender: document.querySelector('input[name="gender"]:checked').value,
+                    tennantPhone: document.getElementById("phone").value,
+                    tennantIdentity: document.getElementById("identity").value,
+                    tennantDob: document.getElementById("dob").value,
+                    tennantImage: fileName,
+                    tennantBuilding: document.getElementById("selectBranch").value,
+                },
+                success: function(dataResult) {
+                    var result = JSON.parse(dataResult);
+
+                    if (result.statusCode == 200) {
+                        console.log("data edit successfully");                        
+                    } else {
+                        console.log("data not added successfully");
+                        console.log(result);
+                    }
+                }
+            });
+
+            if (file != null) {
+                //Post image to server
+                var form = new FormData();
+                form.append("image", fileEdited);
+
+                $.ajax({
+                    type: "POST",
+                    url: "upload_tennant_image.php",
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    contentType: false,
+                    data: form,
+                    success: function(response) {
+                        let result = JSON.parse(response);
+                        console.log(result);
+                    },
+                    error: function(e) {
+                        console.log(e);
+                    }
+                });
+            }
+
+            fileEdited = null;
+            fileName = null;
+            location.reload();
         }
     </script>
 </body>

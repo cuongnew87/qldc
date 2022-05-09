@@ -69,6 +69,12 @@ $data = mysqli_fetch_array($result);
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
+                    <div id="success-modal" class="alert alert-success d-none" role="alert">
+                       Update building information success!
+                    </div>
+                    <div id="danger-modal" class="alert alert-danger d-none" role="alert">
+                        Update building information failed!
+                    </div>
                     <div class="row">
                         <!-- left column -->
                         <div class="col-md-6">
@@ -84,11 +90,11 @@ $data = mysqli_fetch_array($result);
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label>Tên tòa nhà</label>
-                                            <input id="edit-name" type="text" class="form-control" placeholder="Nhập tên" autocomplete="off" value="<?php echo $data['bld_name']?>" />
+                                            <input id="buildingName" type="text" class="form-control" placeholder="Nhập tên" autocomplete="off" value="<?php echo $data['bld_name'] ?>" />
                                         </div>
                                         <div class="form-group">
                                             <label>Chủ sở hữu</label>
-                                            <select class="custom-select" id="universityType">
+                                            <select class="custom-select" id="ownerSelect">
                                                 <?php
                                                 $sql = "SELECT * FROM owners";
                                                 $result = $conn->query($sql);
@@ -96,13 +102,14 @@ $data = mysqli_fetch_array($result);
                                                 if ($result->num_rows > 0) {
                                                     while ($row = $result->fetch_assoc()) {
                                                 ?>
-                                                <option value="<?php echo $row['ownid']; ?>" <?php if($row['ownid'] == $data['ownid']) echo "selected"; ?>><?php echo $row['o_name']; ?></option>
-                                                <?php }}?>
+                                                        <option value="<?php echo $row['ownid']; ?>" <?php if ($row['ownid'] == $data['ownid']) echo "selected"; ?>><?php echo $row['o_name']; ?></option>
+                                                <?php }
+                                                } ?>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label>Địa chỉ</label>
-                                            <input id="edit-address" type="text" class="form-control" placeholder="Nhập địa chỉ" autocomplete="off" value="<?php echo $data['bld_address']?>" />
+                                            <input id="buildingAddress" type="text" class="form-control" placeholder="Nhập địa chỉ" autocomplete="off" value="<?php echo $data['bld_address'] ?>" />
                                         </div>
                                         <div class="form-group">
                                             <label>Hình ảnh</label>
@@ -117,7 +124,7 @@ $data = mysqli_fetch_array($result);
                                     <!-- /.card-body -->
 
                                     <div class="card-footer">
-                                        <button type="button" class="btn btn-primary">Lưu thông tin</button>
+                                        <button type="button" class="btn btn-primary" onclick="editBuilding(<?php echo $building_id; ?>)">Lưu thông tin</button>
                                     </div>
                                 </form>
                             </div>
@@ -132,7 +139,7 @@ $data = mysqli_fetch_array($result);
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <img id="edit-image" src="<?php echo WEB_URL?>dist/img/buildings/<?php echo $data['bld_image']?>" Width="100%" Height="100%" />
+                                    <img id="edit-image" src="<?php echo WEB_URL ?>dist/img/buildings/<?php echo $data['bld_image'] ?>" Width="100%" Height="100%" />
                                 </div>
                                 <!-- /.card-body -->
                             </div>
@@ -156,27 +163,91 @@ $data = mysqli_fetch_array($result);
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
-    <?php $conn->close();?>
+    <?php $conn->close(); ?>
     <?php
     include('../../../components/footer_scripts.php');
     ?>
     <script type="text/javascript">
+        var fileNameEdited = '<?php echo $data['bld_image']; ?>';
+        var fileEdited = null;
+
         function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
-        fileNameEdited = input.files[0].name;
-        fileEdited = input.files[0];
+                fileNameEdited = input.files[0].name;
+                fileEdited = input.files[0];
 
-        reader.onload = function(e) {
-            $('#edit-image').attr('src', e.target.result);
-        };
+                reader.onload = function(e) {
+                    $('#edit-image').attr('src', e.target.result);
+                };
 
-        document.getElementById("file-name").innerHTML = input.files[0].name;
+                document.getElementById("file-name").innerHTML = input.files[0].name;
 
-        reader.readAsDataURL(input.files[0]);
-    }
-}
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function editBuilding(id) {
+
+            $.ajax({
+                url: "edit_building.php",
+                type: "POST",
+                data: {
+                    buildingId: id,
+                    buildingName: document.getElementById("buildingName").value,
+                    buildingAddress: document.getElementById("buildingAddress").value,
+                    ownerSelect: document.getElementById("ownerSelect").value,
+                    buildingImage: fileNameEdited,
+                },
+                success: function(dataResult) {
+                    var result = JSON.parse(dataResult);
+
+                    if (result.statusCode == 200) {
+                        console.log("data edit successfully");
+                        document.getElementById("success-modal").classList.remove("d-none");
+                        document.getElementById("danger-modal").classList.add("d-none");
+
+                        setTimeout(function() { 
+                            document.getElementById("success-modal").classList.add("d-none");
+                        }, 5000);
+                    } else {
+                        console.log("data not added successfully");
+                        document.getElementById("danger-modal").classList.remove("d-none");
+                        document.getElementById("success-modal").classList.add("d-none");
+
+                        setTimeout(function() { 
+                            document.getElementById("danger-modal").classList.add("d-none");
+                        }, 5000);
+                    }
+                }
+            });
+
+            if(fileEdited != null){
+                //Post image to server
+                var form = new FormData();
+                form.append("image", fileEdited);
+
+                $.ajax({
+                    type: "POST",
+                    url: "upload_building_image.php",
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    contentType: false,
+                    data: form,
+                    success: function(response) {
+                        let result = JSON.parse(response);
+                        console.log(result);
+                    },
+                    error: function(e) {
+                        console.log(e);
+                    }
+                });
+            }
+
+            fileEdited = null;
+            fileName = null;
+        }
     </script>
 </body>
 

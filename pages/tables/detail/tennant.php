@@ -86,6 +86,8 @@ $data = mysqli_fetch_array($result);
 
                   <h3 class="profile-username text-center"><?php echo $data['rsd_name']; ?></h3>
 
+                  <p class="text-muted text-center"><?php echo $data['rsd_relationship']; ?></p>
+
                   <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
                       <b>Mã căn cước</b> <a class="float-right"><?php echo $data['rsd_identity']; ?></a>
@@ -177,26 +179,26 @@ $data = mysqli_fetch_array($result);
                         // output data of each row
                         while ($row = $result->fetch_assoc()) {
                       ?>
-                      <!-- Post -->
-                      <div class="post">
-                        <div class="user-block">
-                          <img class="img-circle img-bordered-sm" src="<?php echo WEB_URL ?>dist/img/tennants/<?php echo $row['rsd_image'] ?>" alt="user image">
-                          <span class="username">
-                            <a href="<?php echo WEB_URL ?>pages/tables/detail/tennant.php?tennant_id=<?php echo $row['rsdid']; ?>"><?php echo $row['rsd_name']; ?></a>
-                          </span>
-                          <span class="description"><?php echo $row['rsd_relationship']; ?></span>
-                        </div>
-                        <!-- /.user-block -->
-                        <p>
-                          Lorem ipsum represents a long-held tradition for designers,
-                          typographers and the like. Some people hate it and argue for
-                          its demise, but others ignore the hate as they create awesome
-                          tools to help create filler text for everyone from bacon lovers
-                          to Charlie Sheen fans.
-                        </p>
+                          <!-- Post -->
+                          <div class="post">
+                            <div class="user-block">
+                              <img class="img-circle img-bordered-sm" src="<?php echo WEB_URL ?>dist/img/tennants/<?php echo $row['rsd_image'] ?>" alt="user image">
+                              <span class="username">
+                                <a href="<?php echo WEB_URL ?>pages/tables/detail/tennant.php?tennant_id=<?php echo $row['rsdid']; ?>"><?php echo $row['rsd_name']; ?></a>
+                              </span>
+                              <span class="description"><?php echo $row['rsd_relationship']; ?></span>
+                            </div>
+                            <!-- /.user-block -->
+                            <p>
+                              Lorem ipsum represents a long-held tradition for designers,
+                              typographers and the like. Some people hate it and argue for
+                              its demise, but others ignore the hate as they create awesome
+                              tools to help create filler text for everyone from bacon lovers
+                              to Charlie Sheen fans.
+                            </p>
 
-                      </div>
-                      <!-- /.post -->
+                          </div>
+                          <!-- /.post -->
                       <?php
                         }
                       }
@@ -310,7 +312,7 @@ $data = mysqli_fetch_array($result);
                         <div class="form-group row">
                           <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                           <div class="col-sm-10">
-                            <input type="email" class="form-control" id="inputEmail" placeholder="Email" autocomplete="off">
+                            <input type="email" class="form-control" id="inputEmail" placeholder="Email" value="<?php echo $data['rsd_mail']; ?>" autocomplete="off">
                           </div>
                         </div>
                         <div class="form-group row">

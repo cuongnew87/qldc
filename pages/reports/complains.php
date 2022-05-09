@@ -4,32 +4,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Danh sách tòa nhà</title>
+    <title>AdminLTE 3 | Danh sách khiếu nại</title>
 
     <?php
     include('../../components/header_scripts.php');
     ?>
-
     <!-- DataTables -->
     <link rel="stylesheet" href="<?php echo WEB_URL ?>plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="<?php echo WEB_URL ?>plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
-    <script type="text/javascript">
-        let branch_id = 1;
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('branch_id')) {
-                branch_id = urlParams.get('branch_id');
-            }
-
-            var selectBranch = document.getElementById("selectBranch");
-            selectBranch.value = branch_id;
-            var text = selectBranch.options[selectBranch.selectedIndex].text;
-            document.getElementById("branchName").innerHTML = text;
-        };
-    </script>
     <div class="wrapper">
         <!-- Navbar -->
         <?php
@@ -49,13 +34,13 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Danh sách tòa nhà</h1>
+                            <h1>Danh sách khiếu nại</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item">Home</li>
-                                <li class="breadcrumb-item">Bảng</li>
-                                <li class="breadcrumb-item active">Danh sách tòa nhà</li>
+                                <li class="breadcrumb-item">Thống kê</li>
+                                <li class="breadcrumb-item active">Danh sách khiếu nại</li>
                             </ol>
                         </div>
                     </div>
@@ -66,23 +51,10 @@
             <section class="content">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm-6">
-                            <!-- select -->
-                            <div class="form-group">
-                                <label>Chọn khu nhà</label>
-                                <select id="selectBranch" class="custom-select" onchange="changeBranch()">
-                                    <option value="1">Tòa chung cư</option>
-                                    <option value="2">Khu nhà phố</option>
-                                    <option value="3">Biệt thự</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Danh sách <span id="branchName"><span></h3>
+                                    <h3 class="card-title">Danh sách khiếu nại</h3>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
@@ -90,24 +62,15 @@
                                         <thead>
                                             <tr>
                                                 <th>STT</th>
-                                                <th>Tên tòa nhà</th>
-                                                <th>Địa chỉ</th>
-                                                <th>Chủ sở hữu</th>
+                                                <th>Chủ đề khiếu nại</th>
+                                                <th>Nội dung khiếu nại</th>
+                                                <th>Ngày khiếu nại</th>
                                                 <th>Hành động</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $branch_id = 1;
                                             $index = 1;
-                                            $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? 'https' : 'http') . '://' .  $_SERVER['HTTP_HOST'];
-                                            $url = $base_url . $_SERVER["REQUEST_URI"];
-                                            $parts = parse_url($url);
-                                            if (isset($parts['query'])) {
-                                                parse_str($parts['query'], $query);
-                                                $branch_id = $query['branch_id'];
-                                            }
-
                                             // Create connection
                                             $conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
                                             // Check connection
@@ -115,7 +78,7 @@
                                                 die("Connection failed: " . $conn->connect_error);
                                             }
 
-                                            $sql = "SELECT * FROM buildings, owners where buildings.ownid = owners.ownid and branch_id = " . $branch_id;
+                                            $sql = "SELECT * FROM `complains`";
                                             $result = $conn->query($sql);
 
                                             if ($result->num_rows > 0) {
@@ -125,12 +88,10 @@
                                                     <tr>
                                                         <td><?php echo $index;
                                                             $index++; ?></td>
-                                                        <?php if ($branch_id == 1) echo '<td><a href="' . WEB_URL . 'pages/tables/apartments.php?building_id=' . $row['bldid'] . '">' . $row['bld_name'] . '</a></td>' ?>
-                                                        <?php if ($branch_id != 1) echo '<td>' . $row['bld_name'] . '</td>' ?>
-                                                        <td><?php echo $row['bld_address']; ?></td>
-                                                        <td><?php echo $row['o_name']; ?></td>
+                                                        <td><?php echo $row['spl_subject']; ?></td>
+                                                        <td><?php echo $row['cpl_complain']; ?></td>
+                                                        <td><?php echo $row['cpl_date']; ?></td>
                                                         <td>
-                                                            <a class="btn btn-success ams_btn_special" data-toggle="tooltip" href="<?php echo WEB_URL ?>pages/tables/detail/building.php?building_id=<?php echo $row['bldid']; ?>"><i class="fa fa-eye"></i></a>
                                                             <a class="btn btn-danger ams_btn_special" data-toggle="tooltip" onclick="deleteFloor(12);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash"></i></a>
                                                         </td>
                                                     </tr>
@@ -184,12 +145,12 @@
             });
         });
 
-        function changeBranch() {
-            var selectBranch = document.getElementById("selectBranch");
-            var text = selectBranch.options[selectBranch.selectedIndex].text;
-            var value = selectBranch.options[selectBranch.selectedIndex].value;
-            document.getElementById("branchName").innerHTML = text;
-            window.location.replace("<?php echo WEB_URL ?>pages/tables/buildings.php?branch_id=" + value);
+        function changeBuilding() {
+            var selectBuilding = document.getElementById("selectBuilding");
+            var text = selectBuilding.options[selectBuilding.selectedIndex].text;
+            var value = selectBuilding.options[selectBuilding.selectedIndex].value;
+            document.getElementById("buildingName").innerHTML = text;
+            window.location.replace("<?php echo WEB_URL ?>pages/tables/apartments.php?building_id=" + value);
         }
     </script>
 </body>
