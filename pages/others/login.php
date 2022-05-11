@@ -1,6 +1,9 @@
 <?php
 include(dirname(__DIR__, 2) . "\config.php");
 
+// Start the session
+session_start();
+
 // Create connection
 $conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 // Check connection
@@ -14,7 +17,8 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // output data of each row
     while ($row = $result->fetch_assoc()) {
-    header("Location: ../../index.php");
+        $_SESSION["username"] = $row['user_name'];
+        header("Location: ../../index.php");
     }
 }
 $conn->close();
