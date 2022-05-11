@@ -17,18 +17,18 @@
 
 <body class="hold-transition sidebar-mini">
     <script type="text/javascript">
-        let branch_id = 1;
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('branch_id')) {
-                branch_id = urlParams.get('branch_id');
-            }
+    let branch_id = 1;
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('branch_id')) {
+            branch_id = urlParams.get('branch_id');
+        }
 
-            var selectBranch = document.getElementById("selectBranch");
-            selectBranch.value = branch_id;
-            var text = selectBranch.options[selectBranch.selectedIndex].text;
-            document.getElementById("branchName").innerHTML = text;
-        };
+        var selectBranch = document.getElementById("selectBranch");
+        selectBranch.value = branch_id;
+        var text = selectBranch.options[selectBranch.selectedIndex].text;
+        document.getElementById("branchName").innerHTML = text;
+    };
     </script>
     <div class="wrapper">
         <!-- Navbar -->
@@ -83,11 +83,13 @@
                             <div class="card">
                                 <div class="card-header">
                                     <!--Card image-->
-                                    <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+                                    <div
+                                        class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
                                         <h3 class="card-title">Danh sách cư dân thuộc <span id="branchName"><span></h3>
 
                                         <div>
-                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm mới cư dân</button>
+                                            <button type="button" class="btn btn-success" data-toggle="modal"
+                                                data-target="#exampleModal">Thêm mới cư dân</button>
                                         </div>
 
                                     </div>
@@ -134,18 +136,23 @@
                                                 // output data of each row
                                                 while ($row = $result->fetch_assoc()) {
                                             ?>
-                                                    <tr>
-                                                        <td><?php echo $index;
+                                            <tr>
+                                                <td><?php echo $index;
                                                             $index++; ?></td>
-                                                        <td><?php echo $row['rsd_name']; ?></td>
-                                                        <td><?php echo $row['bld_name']; ?></td>
-                                                        <td><?php echo $row['rsd_phone']; ?></td>
-                                                        <td><?php echo $row['rsd_dob']; ?></td>
-                                                        <td>
-                                                            <a class="btn btn-success ams_btn_special" data-toggle="tooltip" href="<?php echo WEB_URL ?>pages/tables/detail/tennant.php?tennant_id=<?php echo $row['rsdid']; ?>"><i class="fa fa-eye"></i></a>
-                                                            <a class="btn btn-danger ams_btn_special" data-toggle="tooltip" onclick="deleteFloor(12);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash"></i></a>
-                                                        </td>
-                                                    </tr>
+                                                <td><?php echo $row['rsd_name']; ?></td>
+                                                <td><?php echo $row['bld_name']; ?></td>
+                                                <td><?php echo $row['rsd_phone']; ?></td>
+                                                <td><?php echo $row['rsd_dob']; ?></td>
+                                                <td>
+                                                    <a class="btn btn-success ams_btn_special" data-toggle="tooltip"
+                                                        href="<?php echo WEB_URL ?>pages/tables/detail/tennant.php?tennant_id=<?php echo $row['rsdid']; ?>">
+                                                        <i class="fa fa-eye"></i></a>
+                                                    <a class="btn btn-danger ams_btn_special" data-toggle="tooltip"
+                                                        onclick="deleteFloor(12);" href="javascript:;"
+                                                        data-original-title="Delete">
+                                                        <i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
                                             <?php
                                                 }
                                             }
@@ -225,7 +232,8 @@
                                 <label>Hình ảnh (ảnh 128 x 128 px)</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" style="cursor: pointer;" class="custom-file-input" ID="FileUpload" onchange="readURL(this)" />
+                                        <input type="file" style="cursor: pointer;" class="custom-file-input"
+                                            ID="FileUpload" onchange="readURL(this)" />
                                         <label class="custom-file-label" id="file-name">Chọn hình ảnh</label>
                                     </div>
                                 </div>
@@ -262,89 +270,89 @@
     <script src="<?php echo WEB_URL ?>plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <!-- Page specific script -->
     <script>
-        $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "autoWidth": false,
-            });
+    $(function() {
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+    });
+
+    function changeBranch() {
+        var selectBranch = document.getElementById("selectBranch");
+        var text = selectBranch.options[selectBranch.selectedIndex].text;
+        var value = selectBranch.options[selectBranch.selectedIndex].value;
+        document.getElementById("branchName").innerHTML = text;
+        window.location.replace("<?php echo WEB_URL ?>pages/tables/tennants.php?branch_id=" + value);
+    }
+
+    var fileName = 'user-default.png';
+    var file = null;
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            fileName = input.files[0].name;
+            file = input.files[0];
+
+            document.getElementById("file-name").innerHTML = input.files[0].name;
+        }
+    }
+
+    function addNewTennant() {
+
+        $.ajax({
+            url: "add_tennant.php",
+            type: "POST",
+            data: {
+                tennantName: document.getElementById("name").value,
+                tennantEmail: document.getElementById("email").value,
+                tennantPhone: document.getElementById("phone").value,
+                tennantGender: document.querySelector('input[name="gender"]:checked').value,
+                tennantPhone: document.getElementById("phone").value,
+                tennantIdentity: document.getElementById("identity").value,
+                tennantDob: document.getElementById("dob").value,
+                tennantImage: fileName,
+                tennantBuilding: document.getElementById("selectBranch").value,
+            },
+            success: function(dataResult) {
+                var result = JSON.parse(dataResult);
+
+                if (result.statusCode == 200) {
+                    console.log("data edit successfully");
+                } else {
+                    console.log("data not added successfully");
+                    console.log(result);
+                }
+            }
         });
 
-        function changeBranch() {
-            var selectBranch = document.getElementById("selectBranch");
-            var text = selectBranch.options[selectBranch.selectedIndex].text;
-            var value = selectBranch.options[selectBranch.selectedIndex].value;
-            document.getElementById("branchName").innerHTML = text;
-            window.location.replace("<?php echo WEB_URL ?>pages/tables/tennants.php?branch_id=" + value);
-        }
-
-        var fileName = 'user-default.png';
-        var file = null;
-
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                fileName = input.files[0].name;
-                file = input.files[0];
-
-                document.getElementById("file-name").innerHTML = input.files[0].name;
-            }
-        }
-
-        function addNewTennant() {
+        if (file != null) {
+            //Post image to server
+            var form = new FormData();
+            form.append("image", fileEdited);
 
             $.ajax({
-                url: "add_tennant.php",
                 type: "POST",
-                data: {
-                    tennantName: document.getElementById("name").value,
-                    tennantEmail: document.getElementById("email").value,
-                    tennantPhone: document.getElementById("phone").value,
-                    tennantGender: document.querySelector('input[name="gender"]:checked').value,
-                    tennantPhone: document.getElementById("phone").value,
-                    tennantIdentity: document.getElementById("identity").value,
-                    tennantDob: document.getElementById("dob").value,
-                    tennantImage: fileName,
-                    tennantBuilding: document.getElementById("selectBranch").value,
+                url: "upload_tennant_image.php",
+                processData: false,
+                mimeType: "multipart/form-data",
+                contentType: false,
+                data: form,
+                success: function(response) {
+                    let result = JSON.parse(response);
+                    console.log(result);
                 },
-                success: function(dataResult) {
-                    var result = JSON.parse(dataResult);
-
-                    if (result.statusCode == 200) {
-                        console.log("data edit successfully");                        
-                    } else {
-                        console.log("data not added successfully");
-                        console.log(result);
-                    }
+                error: function(e) {
+                    console.log(e);
                 }
             });
-
-            if (file != null) {
-                //Post image to server
-                var form = new FormData();
-                form.append("image", fileEdited);
-
-                $.ajax({
-                    type: "POST",
-                    url: "upload_tennant_image.php",
-                    processData: false,
-                    mimeType: "multipart/form-data",
-                    contentType: false,
-                    data: form,
-                    success: function(response) {
-                        let result = JSON.parse(response);
-                        console.log(result);
-                    },
-                    error: function(e) {
-                        console.log(e);
-                    }
-                });
-            }
-
-            fileEdited = null;
-            fileName = null;
-            location.reload();
         }
+
+        fileEdited = null;
+        fileName = null;
+        location.reload();
+    }
     </script>
 </body>
 
