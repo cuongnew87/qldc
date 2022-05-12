@@ -4,7 +4,7 @@
         header("Location: " . WEB_URL ."pages/others/login.php");
     }
 
-    if($_SESSION['role'] != 0)
+    if($_SESSION['role'] != 1)
     header("Location: " . WEB_URL ."pages/others/login.php");
 
     function activeLi($file_name)
@@ -53,21 +53,9 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?php echo WEB_URL ?>index.php" class="nav-link <?php activeLi('index.php') ?>">
+                            <a href="<?php echo WEB_URL ?>role_1/index.php" class="nav-link <?php activeLi('index.php') ?>">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Tòa chung cư</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo WEB_URL ?>index2.php" class="nav-link <?php activeLi('index2.php') ?>">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Khu nhà phố</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo WEB_URL ?>index3.php" class="nav-link <?php activeLi('index3.php') ?>">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Tòa biệt thự</p>
+                                <p>Trang chủ</p>
                             </a>
                         </li>
                     </ul>
@@ -83,33 +71,27 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?php echo WEB_URL ?>pages/tables/buildings.php" class="nav-link <?php activeLi('pages/tables/buildings.php') ?>">
+                            <a href="<?php echo WEB_URL ?>role_1/members.php" class="nav-link <?php activeLi('members.php') ?>">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Danh sách tòa nhà</p>
+                                <p>Danh sách thành viên</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?php echo WEB_URL ?>pages/tables/tennants.php" class="nav-link <?php activeLi('pages/tables/tennants.php') ?>">
+                            <a href="<?php echo WEB_URL ?>role_1/profile.php" class="nav-link <?php activeLi('profile.php') ?>">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Danh sách cư dân</p>
+                                <p>Thông tin cá nhân</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?php echo WEB_URL ?>pages/tables/services.php" class="nav-link <?php activeLi('pages/tables/services.php') ?>">
+                            <a href="<?php echo WEB_URL ?>role_1/services.php" class="nav-link <?php activeLi('services.php') ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Dịch vụ</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?php echo WEB_URL ?>pages/tables/apartments.php" class="nav-link <?php activeLi('pages/tables/apartments.php') ?>">
+                            <a href="<?php echo WEB_URL ?>role_1/apartment.php" class="nav-link <?php activeLi('apartment.php') ?>">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Căn hộ</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo WEB_URL ?>pages/tables/contracts.php" class="nav-link <?php activeLi('pages/tables/contracts.php') ?>">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Hợp đồng</p>
+                                <p>Thông tin căn hộ</p>
                             </a>
                         </li>
                     </ul>
@@ -124,20 +106,26 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?php echo WEB_URL ?>pages/reports/complains.php" class="nav-link <?php activeLi('pages/reports/complains.php') ?>">
+                            <a href="<?php echo WEB_URL ?>role_1/complain.php" class="nav-link <?php activeLi('complain.php') ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Khiếu nại</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?php echo WEB_URL ?>pages/reports/rentals.php" class="nav-link <?php activeLi('pages/reports/rentals.php') ?>">
+                            <a href="<?php echo WEB_URL ?>role_1/bill.php" class="nav-link <?php activeLi('pages/reports/rentals.php') ?>">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Chi phí</p>
+                                <p>Hóa đơn</p>
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-header">KHÁC</li>
+                <li class="nav-item">
+                    <a href="<?php echo WEB_URL ?>role_1/contact.php" class="nav-link <?php activeLi('contact.php') ?>">
+                    <i class="nav-icon far fa-circle"></i>
+                    <p class="text">Liên hệ</p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="<?php echo WEB_URL ?>pages/others/login.php" class="nav-link">
                     <i class="nav-icon far fa-circle"></i>
