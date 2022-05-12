@@ -20,6 +20,8 @@ if ($result->num_rows > 0) {
         $_SESSION["username"] = $row['user_name'];
         header("Location: ../../index.php");
     }
+} else{
+    header("Location: login.html?login=0");
 }
 $conn->close();
 
