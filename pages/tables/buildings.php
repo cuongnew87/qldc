@@ -17,18 +17,18 @@
 
 <body class="hold-transition sidebar-mini">
     <script type="text/javascript">
-    let branch_id = 1;
-    window.onload = function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('branch_id')) {
-            branch_id = urlParams.get('branch_id');
-        }
+        let branch_id = 1;
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('branch_id')) {
+                branch_id = urlParams.get('branch_id');
+            }
 
-        var selectBranch = document.getElementById("selectBranch");
-        selectBranch.value = branch_id;
-        var text = selectBranch.options[selectBranch.selectedIndex].text;
-        document.getElementById("branchName").innerHTML = text;
-    };
+            var selectBranch = document.getElementById("selectBranch");
+            selectBranch.value = branch_id;
+            var text = selectBranch.options[selectBranch.selectedIndex].text;
+            document.getElementById("branchName").innerHTML = text;
+        };
     </script>
     <div class="wrapper">
         <!-- Navbar -->
@@ -82,13 +82,11 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <div
-                                        class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+                                    <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
 
                                         <h3 class="card-title">Danh sách <span id="branchName"><span></h3>
                                         <div>
-                                            <button type="button" class="btn btn-success" data-toggle="modal"
-                                                data-target="#exampleModal">Thêm mới tòa nhà</button>
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm mới tòa nhà</button>
                                         </div>
                                     </div>
                                 </div>
@@ -130,22 +128,18 @@
                                                 // output data of each row
                                                 while ($row = $result->fetch_assoc()) {
                                             ?>
-                                            <tr>
-                                                <td><?php echo $index;
-                                                $index++; ?></td>
-                                                <?php if ($branch_id == 1) echo '<td><a href="' . WEB_URL . 'pages/tables/apartments.php?building_id=' . $row['bldid'] . '">' . $row['bld_name'] . '</a></td>' ?>
-                                                <?php if ($branch_id != 1) echo '<td>' . $row['bld_name'] . '</td>' ?>
-                                                <td><?php echo $row['bld_address']; ?></td>
-                                                <td><?php echo $row['o_name']; ?></td>
-                                                <td>
-                                                    <a class="btn btn-success ams_btn_special" data-toggle="tooltip"
-                                                        href="<?php echo WEB_URL ?>pages/tables/detail/building.php?building_id=<?php echo $row['bldid']; ?>"><i
-                                                            class="fa fa-eye"></i></a>
-                                                    <a class="btn btn-danger ams_btn_special" data-toggle="tooltip"
-                                                        onclick="deleteFloor(12);" href="javascript:;"
-                                                        data-original-title="Delete"><i class="fa fa-trash"></i></a>
-                                                </td>
-                                            </tr>
+                                                    <tr>
+                                                        <td><?php echo $index;
+                                                            $index++; ?></td>
+                                                        <?php if ($branch_id == 1) echo '<td><a href="' . WEB_URL . 'pages/tables/apartments.php?building_id=' . $row['bldid'] . '">' . $row['bld_name'] . '</a></td>' ?>
+                                                        <?php if ($branch_id != 1) echo '<td>' . $row['bld_name'] . '</td>' ?>
+                                                        <td><?php echo $row['bld_address']; ?></td>
+                                                        <td><?php echo $row['o_name']; ?></td>
+                                                        <td>
+                                                            <a class="btn btn-success ams_btn_special" data-toggle="tooltip" href="<?php echo WEB_URL ?>pages/tables/detail/building.php?building_id=<?php echo $row['bldid']; ?>"><i class="fa fa-eye"></i></a>
+                                                            <a class="btn btn-danger ams_btn_special" data-toggle="tooltip" onclick="deleteFloor(12);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash"></i></a>
+                                                        </td>
+                                                    </tr>
                                             <?php
                                                 }
                                             }
@@ -184,7 +178,6 @@
                     </div>
 
                     <div class="modal-body">
-
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="name">Tên tòa nhà</label>
@@ -197,7 +190,7 @@
                             <div class="form-group">
                                 <label for="owner">Chủ sở hữu</label>
                                 <select name="owner" id="selectOwner" class="custom-select">
-                                    <?php 
+                                    <?php
                                     // Create connection
                                     $conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
                                     // Check connection
@@ -211,8 +204,8 @@
                                     if ($result->num_rows > 0) {
                                         // output data of each row
                                         while ($row = $result->fetch_assoc()) {
-                                        ?>
-                                    <option value="<?php echo $row['ownid']?>"><?php echo $row['o_name']?></option>
+                                    ?>
+                                            <option value="<?php echo $row['ownid'] ?>"><?php echo $row['o_name'] ?></option>
                                     <?php
                                         }
                                     }
@@ -237,9 +230,9 @@
                                     if ($result->num_rows > 0) {
                                         // output data of each row
                                         while ($row = $result->fetch_assoc()) {
-                                        ?>
-                                    <option value="<?php echo $row['branch_id']?>"><?php echo $row['branch_name']?>
-                                    </option>
+                                    ?>
+                                            <option value="<?php echo $row['branch_id'] ?>"><?php echo $row['branch_name'] ?>
+                                            </option>
                                     <?php
                                         }
                                     }
@@ -248,14 +241,11 @@
                                 </select>
 
                             </div>
-
-
                             <div class="form-group">
                                 <label>Hình ảnh</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" style="cursor: pointer;" class="custom-file-input"
-                                            ID="FileUpload" onchange="readURL(this)" />
+                                        <input type="file" style="cursor: pointer;" class="custom-file-input" ID="FileUpload" onchange="readURL(this)" />
                                         <label class="custom-file-label" id="file-name">Chọn hình ảnh</label>
                                     </div>
                                 </div>
@@ -292,87 +282,87 @@
     <script src="<?php echo WEB_URL ?>plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <!-- Page specific script -->
     <script>
-    $(function() {
-        $("#example1").DataTable({
-            "responsive": true,
-            "autoWidth": false,
+        $(function() {
+            $("#example1").DataTable({
+                "responsive": true,
+                "autoWidth": false,
+            });
         });
-    });
 
-    function changeBranch() {
-        var selectBranch = document.getElementById("selectBranch");
-        var text = selectBranch.options[selectBranch.selectedIndex].text;
-        var value = selectBranch.options[selectBranch.selectedIndex].value;
-        document.getElementById("branchName").innerHTML = text;
-        window.location.replace("<?php echo WEB_URL ?>pages/tables/buildings.php?branch_id=" + value);
-    }
-
-
-    var fileName = 'building-default.png';
-    var file = null;
-
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            fileName = input.files[0].name;
-            file = input.files[0];
-
-            document.getElementById("file-name").innerHTML = input.files[0].name;
+        function changeBranch() {
+            var selectBranch = document.getElementById("selectBranch");
+            var text = selectBranch.options[selectBranch.selectedIndex].text;
+            var value = selectBranch.options[selectBranch.selectedIndex].value;
+            document.getElementById("branchName").innerHTML = text;
+            window.location.replace("<?php echo WEB_URL ?>pages/tables/buildings.php?branch_id=" + value);
         }
-    }
 
-    function addNewBuilding() {
 
-        $.ajax({
-            url: "add_building.php",
-            type: "POST",
-            data: {
-                buildingName: document.getElementById("name").value,
-                buildingAddress: document.getElementById("address").value,
-                buildingOwner: document.getElementById("selectOwner").value,
-                buildingBranch: document.getElementById("selectBranchModel").value,
-                buildingImage: fileName,
+        var fileName = 'building-default.png';
+        var file = null;
 
-            },
-            success: function(dataResult) {
-                var result = JSON.parse(dataResult);
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
-                if (result.statusCode == 200) {
-                    console.log("data edit successfully");
-                } else {
-                    console.log("data not added successfully");
-                    console.log(result);
-                }
+                fileName = input.files[0].name;
+                file = input.files[0];
+
+                document.getElementById("file-name").innerHTML = input.files[0].name;
             }
-        });
+        }
 
-        if (file != null) {
-            //Post image to server
-            var form = new FormData();
-            form.append("image", file);
+        function addNewBuilding() {
 
             $.ajax({
+                url: "add_building.php",
                 type: "POST",
-                url: "upload_building_image.php",
-                processData: false,
-                mimeType: "multipart/form-data",
-                contentType: false,
-                data: form,
-                success: function(response) {
-                    let result = JSON.parse(response);
-                    console.log(result);
+                data: {
+                    buildingName: document.getElementById("name").value,
+                    buildingAddress: document.getElementById("address").value,
+                    buildingOwner: document.getElementById("selectOwner").value,
+                    buildingBranch: document.getElementById("selectBranchModel").value,
+                    buildingImage: fileName,
+
                 },
-                error: function(e) {
-                    console.log(e);
+                success: function(dataResult) {
+                    var result = JSON.parse(dataResult);
+
+                    if (result.statusCode == 200) {
+                        console.log("data edit successfully");
+                    } else {
+                        console.log("data not added successfully");
+                        console.log(result);
+                    }
                 }
             });
-        }
 
-        file = null;
-        fileName = null;
-        location.reload();
-    }
+            if (file != null) {
+                //Post image to server
+                var form = new FormData();
+                form.append("image", file);
+
+                $.ajax({
+                    type: "POST",
+                    url: "upload_building_image.php",
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    contentType: false,
+                    data: form,
+                    success: function(response) {
+                        let result = JSON.parse(response);
+                        console.log(result);
+                    },
+                    error: function(e) {
+                        console.log(e);
+                    }
+                });
+            }
+
+            file = null;
+            fileName = null;
+            location.reload();
+        }
     </script>
 </body>
 

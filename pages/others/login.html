@@ -17,7 +17,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Admin</b>LTE</a>
+    <a href="../../index.php"><b>Admin</b>LTE</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -62,6 +62,15 @@
   </div>
 </div>
 <!-- /.login-box -->
+
+<script type="text/javascript">
+  var url = window.location;
+  var captured = /login=([^&]+)/.exec(url)[1];
+  var result = captured ? captured : '-1';
+  if(result == 0){
+    alert("Login not successful!");
+  }
+</script>
 
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>

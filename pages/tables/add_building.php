@@ -19,10 +19,35 @@ $sql = "INSERT INTO buildings(bld_name, bld_address, ownid, branch_id, bld_image
 
 $result = $conn->query($sql);
 
-if ($result){
+// $sql1 = "DROP PROCEDURE LoopDemo; "
+// ."DELIMITER $$ "
+// ."CREATE PROCEDURE LoopDemo() "
+// ."BEGIN "
+// ."DECLARE building_id  INT; "
+// ."DECLARE num_service  INT; "
+// ."DECLARE x  INT; "    
+// ."SET x = 1; "
+// ."SET building_id = " . '(SELECT `buildings`.`bldid` FROM `buildings` ORDER BY `buildings`.`bldid` DESC LIMIT 1); '
+// ."SET num_service =  (SELECT COUNT(*) FROM `utilities`); "
+// ."loop_label:  LOOP "
+// ."IF  x > num_service THEN "
+// ."LEAVE  loop_label; "
+// ."END  IF; "
+// .'INSERT INTO `utilities_building`(bldid, utltid) VALUES(building_id, x);'
+// ."SET  x = x + 1; "
+// ."END LOOP; "
+// ."END$$ "
+// ."DELIMITER; "
+// ."CALL LoopDemo(); ";
+
+$sql1 = "CALL LoopDemo();";
+
+$result1 = $conn->query($sql1);
+
+if ($result1){
     echo json_encode(array("statusCode" => 200));
 } else {
-    echo json_encode(array("statusCode" => 201, "rsd_name" => $tennantName, ));
+    echo json_encode(array("statusCode" => 201, "result1" => $result1));
 }
 $conn->close();
 ?>

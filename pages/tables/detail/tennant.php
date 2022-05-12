@@ -64,7 +64,7 @@ $data = mysqli_fetch_array($result);
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">User Profile</li>
+                <li class="breadcrumb-item active">Hồ sơ cá nhân</li>
               </ol>
             </div>
           </div>
@@ -80,6 +80,8 @@ $data = mysqli_fetch_array($result);
               <!-- Profile Image -->
               <div class="card card-primary card-outline">
                 <div class="card-body box-profile">
+                  <input type="hidden" id="buildingId" value="<?php echo $data['bldid'] ?>">
+                  <input type="hidden" id="apartmentId" value="<?php echo $data['aid'] ?>">
                   <div class="text-center">
                     <img class="img-fluid rounded-circle" src="<?php echo WEB_URL ?>dist/img/tennants/<?php echo $data['rsd_image']; ?>" alt="User profile picture">
                   </div>
@@ -145,8 +147,7 @@ $data = mysqli_fetch_array($result);
                 <div class="card-header p-2">
                   <ul class="nav nav-pills">
                     <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Thành viên trong gia đình</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Cài đặt</a></li>
                   </ul>
                 </div><!-- /.card-header -->
                 <div class="card-body">
@@ -171,8 +172,8 @@ $data = mysqli_fetch_array($result);
                       }
 
                       $sql = "SELECT * FROM `residents` 
-                      WHERE `residents`.`aid` = (SELECT `residents`.`aid` FROM `residents` WHERE `residents`.`rsdid` = 1) 
-                      AND `residents`.`rsdid` <> " . $tennant_id;
+                      WHERE `residents`.`aid` = (SELECT `residents`.`aid` FROM `residents` WHERE `residents`.`rsdid` = $tennant_id) 
+                      AND `residents`.`rsdid` <> " . $tennant_id . " AND `residents`.`rsd_relationship` <> 'Không'";
                       $result = $conn->query($sql);
 
                       if ($result->num_rows > 0) {
@@ -190,11 +191,7 @@ $data = mysqli_fetch_array($result);
                             </div>
                             <!-- /.user-block -->
                             <p>
-                              Lorem ipsum represents a long-held tradition for designers,
-                              typographers and the like. Some people hate it and argue for
-                              its demise, but others ignore the hate as they create awesome
-                              tools to help create filler text for everyone from bacon lovers
-                              to Charlie Sheen fans.
+                              None
                             </p>
 
                           </div>
@@ -203,149 +200,54 @@ $data = mysqli_fetch_array($result);
                         }
                       }
                       ?>
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Thêm mới thành viên</button>
                     </div>
-                    <!-- /.tab-pane -->
-                    <div class="tab-pane" id="timeline">
-                      <!-- The timeline -->
-                      <div class="timeline timeline-inverse">
-                        <!-- timeline time label -->
-                        <div class="time-label">
-                          <span class="bg-danger">
-                            10 Feb. 2014
-                          </span>
-                        </div>
-                        <!-- /.timeline-label -->
-                        <!-- timeline item -->
-                        <div>
-                          <i class="fas fa-envelope bg-primary"></i>
-
-                          <div class="timeline-item">
-                            <span class="time"><i class="far fa-clock"></i> 12:05</span>
-
-                            <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
-                            <div class="timeline-body">
-                              Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                              weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                              jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                              quora plaxo ideeli hulu weebly balihoo...
-                            </div>
-                            <div class="timeline-footer">
-                              <a href="#" class="btn btn-primary btn-sm">Read more</a>
-                              <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- END timeline item -->
-                        <!-- timeline item -->
-                        <div>
-                          <i class="fas fa-user bg-info"></i>
-
-                          <div class="timeline-item">
-                            <span class="time"><i class="far fa-clock"></i> 5 mins ago</span>
-
-                            <h3 class="timeline-header border-0"><a href="#">Sarah Young</a> accepted your friend request
-                            </h3>
-                          </div>
-                        </div>
-                        <!-- END timeline item -->
-                        <!-- timeline item -->
-                        <div>
-                          <i class="fas fa-comments bg-warning"></i>
-
-                          <div class="timeline-item">
-                            <span class="time"><i class="far fa-clock"></i> 27 mins ago</span>
-
-                            <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-                            <div class="timeline-body">
-                              Take me to your leader!
-                              Switzerland is small and neutral!
-                              We are more like Germany, ambitious and misunderstood!
-                            </div>
-                            <div class="timeline-footer">
-                              <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- END timeline item -->
-                        <!-- timeline time label -->
-                        <div class="time-label">
-                          <span class="bg-success">
-                            3 Jan. 2014
-                          </span>
-                        </div>
-                        <!-- /.timeline-label -->
-                        <!-- timeline item -->
-                        <div>
-                          <i class="fas fa-camera bg-purple"></i>
-
-                          <div class="timeline-item">
-                            <span class="time"><i class="far fa-clock"></i> 2 days ago</span>
-
-                            <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-
-                            <div class="timeline-body">
-                              <img src="https://placehold.it/150x100" alt="...">
-                              <img src="https://placehold.it/150x100" alt="...">
-                              <img src="https://placehold.it/150x100" alt="...">
-                              <img src="https://placehold.it/150x100" alt="...">
-                            </div>
-                          </div>
-                        </div>
-                        <!-- END timeline item -->
-                        <div>
-                          <i class="far fa-clock bg-gray"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- /.tab-pane -->
 
                     <div class="tab-pane" id="settings">
-                      <form class="form-horizontal">
+                      <div class="form-horizontal">
                         <div class="form-group row">
-                          <label for="inputName" class="col-sm-2 col-form-label">Họ và tên</label>
+                          <label for="name" class="col-sm-2 col-form-label">Họ và tên</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputName" placeholder="Họ và tên" value="<?php echo $data['rsd_name']; ?>" autocomplete="off">
+                            <input type="text" class="form-control" id="name" placeholder="Họ và tên" value="<?php echo $data['rsd_name']; ?>" autocomplete="off">
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                          <label for="email" class="col-sm-2 col-form-label">Email</label>
                           <div class="col-sm-10">
-                            <input type="email" class="form-control" id="inputEmail" placeholder="Email" value="<?php echo $data['rsd_mail']; ?>" autocomplete="off">
+                            <input type="email" class="form-control" id="email" placeholder="Email" value="<?php echo $data['rsd_mail']; ?>" autocomplete="off">
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="inputName2" class="col-sm-2 col-form-label">Số điện thoại</label>
+                          <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputName2" placeholder="Số điện thoại" value="<?php echo $data['rsd_phone']; ?>" autocomplete="off">
+                            <input type="text" class="form-control" id="phone" placeholder="Số điện thoại" value="<?php echo $data['rsd_phone']; ?>" autocomplete="off">
                           </div>
                         </div>
                         <div class="form-group row">
                           <label for="inputExperience" class="col-sm-2 col-form-label">Giới tính</label>
                           <div class="col-sm-10 d-flex">
                             <div class="form-check m-1">
-                              <input class="form-check-input" type="radio" name="gender" checked>
+                              <input class="form-check-input" type="radio" name="gender" value="Nam" <?php if ($data['rsd_sex'] == "Nam") echo "checked" ?>>
                               <label class="form-check-label">Nam</label>
                             </div>
                             <div class="form-check m-1">
-                              <input class="form-check-input" type="radio" name="gender">
+                              <input class="form-check-input" type="radio" name="gender" value="Nữ" <?php if ($data['rsd_sex'] == "Nữ") echo "checked" ?>>
                               <label class="form-check-label">Nữ</label>
                             </div>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="inputSkills" class="col-sm-2 col-form-label">Số căn cước</label>
+                          <label for="identity" class="col-sm-2 col-form-label">Số căn cước</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputSkills" placeholder="Số căn cước" value="<?php echo $data['rsd_identity']; ?>">
+                            <input type="text" class="form-control" id="identity" placeholder="Số căn cước" value="<?php echo $data['rsd_identity']; ?>">
                           </div>
                         </div>
                         <div class="form-group row">
                           <div class="offset-sm-2 col-sm-10">
-                            <button type="submit" class="btn btn-danger">Cập nhật thông tin</button>
+                            <button type="button" class="btn btn-danger" onclick="updateInfo(<?php echo $tennant_id ?>)">Cập nhật thông tin</button>
                           </div>
                         </div>
-                      </form>
+                      </div>
                     </div>
                     <!-- /.tab-pane -->
                   </div>
@@ -361,6 +263,63 @@ $data = mysqli_fetch_array($result);
       </section>
       <!-- /.content -->
     </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Thêm mới tòa nhà
+            </h5>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">
+                ×
+              </span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="member">Chọn thành viên</label>
+                <select name="member" id="selectMember" class="custom-select">
+                  <?php
+                  // Create connection
+                  $conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+                  // Check connection
+                  if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                  }
+
+                  $sql = "SELECT * FROM residents WHERE rsd_relationship = 'Không' AND rsdid <> $tennant_id";
+                  $result = $conn->query($sql);
+
+                  if ($result->num_rows > 0) {
+                    // output data of each row
+                    while ($row = $result->fetch_assoc()) {
+                  ?>
+                      <option value="<?php echo $row['rsdid'] ?>"><?php echo $row['rsd_name'] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="relationship">Quan hệ với chủ hộ</label>
+                <input id="relationship" type="text" name="relationship" class="form-control" required autocomplete="off">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" onclick="addNewMember()">Thêm mới</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- /.content-wrapper -->
     <?php
     include('../../../components/footer.php');
@@ -393,6 +352,68 @@ $data = mysqli_fetch_array($result);
 
         reader.readAsDataURL(input.files[0]);
       }
+    }
+
+    function updateInfo(id) {
+      let gender = "Nam";
+      var radios = document.getElementsByName('gender');
+      for (var i = 0, length = radios.length; i < length; i++) {
+        if (radios[i].checked) {
+          // do whatever you want with the checked radio
+          gender = radios[i].value;
+
+          // only one radio can be logically checked, don't check the rest
+          break;
+        }
+      }
+
+      $.ajax({
+        url: "edit_tennant.php",
+        type: "POST",
+        data: {
+          tennantId: id,
+          tennantName: document.getElementById("name").value,
+          tennantEmail: document.getElementById("email").value,
+          tennantIdentity: document.getElementById("identity").value,
+          tennantPhone: document.getElementById("phone").value,
+          tennantGender: gender,
+        },
+        success: function(dataResult) {
+          var result = JSON.parse(dataResult);
+
+          if (result.statusCode == 200) {
+            location.reload();
+            console.log("change data successfully");
+          } else {
+            console.log("data not added successfully");
+            console.log(result);
+          }
+        }
+      });
+    }
+
+    function addNewMember() {
+      $.ajax({
+        url: "add_member.php",
+        type: "POST",
+        data: {
+          memberId: document.getElementById('selectMember').value,
+          memberRelationship: document.getElementById("relationship").value,
+          buildingId: document.getElementById("buildingId").value,
+          apartmentId: document.getElementById("apartmentId").value
+        },
+        success: function(dataResult) {
+          var result = JSON.parse(dataResult);
+
+          if (result.statusCode == 200) {
+            console.log("data edit successfully");
+            location.reload();
+          } else {
+            console.log("data not added successfully");
+            console.log(result);
+          }
+        }
+      });
     }
   </script>
 </body>

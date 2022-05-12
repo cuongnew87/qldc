@@ -70,7 +70,7 @@ $data = mysqli_fetch_array($result);
             <section class="content">
                 <div class="container-fluid">
                     <div id="success-modal" class="alert alert-success d-none" role="alert">
-                       Update building information success!
+                        Update building information success!
                     </div>
                     <div id="danger-modal" class="alert alert-danger d-none" role="alert">
                         Update building information failed!
@@ -146,8 +146,68 @@ $data = mysqli_fetch_array($result);
                             <!-- /.card -->
                         </div>
                     </div>
+
                 </div>
                 <!-- /.container-fluid -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Đăng ký dịch vụ</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên dịch vụ</th>
+                                                <th>Giá tiền</th>
+                                                <th>Đăng ký</th>
+                                                <th>Hành động</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+
+                                            // Create connection
+                                            $conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+                                            // Check connection
+                                            if ($conn->connect_error) {
+                                                die("Connection failed: " . $conn->connect_error);
+                                            }
+
+                                            $sql = "SELECT * FROM utilities, utilities_building WHERE utilities.utltid = utilities_building.utltid AND bldid = " . $building_id;
+                                            $result = $conn->query($sql);
+
+                                            if ($result->num_rows > 0) {
+                                                // output data of each row
+                                                while ($row = $result->fetch_assoc()) {
+                                            ?>
+                                                    <tr>
+                                                        <td><?php echo $index;
+                                                            $index++; ?></td>
+                                                        <td><?php echo $row['utlt_name']; ?></td>
+                                                        <td><input type="number" id="service_cost_<?php echo $row['utltid']; ?>" value="<?php echo $row['utlt_cost']; ?>"></td>
+                                                        <td><input type="checkbox" id="service_register_<?php echo $row['utltid']; ?>" <?php if($row['register'] != 0) echo "checked" ?> ></td>
+                                                        <td><button class="btn btn-primary" onclick="saveService(<?php echo $row['utltid']; ?>)">Save change</button></td>
+                                                    </tr>
+                                            <?php
+                                                }
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
             </section>
             <!-- /.content -->
         </div>
@@ -208,7 +268,7 @@ $data = mysqli_fetch_array($result);
                         document.getElementById("success-modal").classList.remove("d-none");
                         document.getElementById("danger-modal").classList.add("d-none");
 
-                        setTimeout(function() { 
+                        setTimeout(function() {
                             document.getElementById("success-modal").classList.add("d-none");
                         }, 5000);
                     } else {
@@ -216,14 +276,14 @@ $data = mysqli_fetch_array($result);
                         document.getElementById("danger-modal").classList.remove("d-none");
                         document.getElementById("success-modal").classList.add("d-none");
 
-                        setTimeout(function() { 
+                        setTimeout(function() {
                             document.getElementById("danger-modal").classList.add("d-none");
                         }, 5000);
                     }
                 }
             });
 
-            if(fileEdited != null){
+            if (fileEdited != null) {
                 //Post image to server
                 var form = new FormData();
                 form.append("image", fileEdited);
@@ -247,6 +307,42 @@ $data = mysqli_fetch_array($result);
 
             fileEdited = null;
             fileName = null;
+        }
+
+        function saveService(id){
+            let checked = 0;
+            if(document.getElementById("service_register_" + id).checked) checked = 1;
+            $.ajax({
+                url: "save_service.php",
+                type: "POST",
+                data: {
+                    buildingId: <?php echo $building_id; ?>,
+                    serviceId: id,
+                    service_cost: document.getElementById("service_cost_" + id).value,
+                    service_register: checked,
+                },
+                success: function(dataResult) {
+                    var result = JSON.parse(dataResult);
+
+                    if (result.statusCode == 200) {
+                        console.log("data edit successfully");
+                        document.getElementById("success-modal").classList.remove("d-none");
+                        document.getElementById("danger-modal").classList.add("d-none");
+
+                        setTimeout(function() {
+                            document.getElementById("success-modal").classList.add("d-none");
+                        }, 5000);
+                    } else {
+                        console.log("data not added successfully");
+                        document.getElementById("danger-modal").classList.remove("d-none");
+                        document.getElementById("success-modal").classList.add("d-none");
+
+                        setTimeout(function() {
+                            document.getElementById("danger-modal").classList.add("d-none");
+                        }, 5000);
+                    }
+                }
+            });
         }
     </script>
 </body>

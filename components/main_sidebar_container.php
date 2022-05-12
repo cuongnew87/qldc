@@ -1,4 +1,8 @@
 <?php
+    session_start();
+    if(!isset($_SESSION['username'])){
+        header("Location: " . WEB_URL ."pages/others/login.html");
+    }
     function activeLi($file_name)
     {
         if (strpos($_SERVER['REQUEST_URI'], $file_name)) echo 'active';
@@ -23,10 +27,10 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="<?php echo WEB_URL ?>dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" />
+                <img src="<?php echo WEB_URL ?>dist/img/tennants/user-default.png" class="img-circle elevation-2" alt="User Image" />
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block"><?php echo $_SESSION['username']; ?></a>
             </div>
         </div>
 

@@ -128,7 +128,7 @@
 
                                             $sql = "SELECT * FROM `residents`, `buildings`, `branches`
                                             WHERE `residents`.`bldid` = `buildings`.`bldid`
-                                            AND `branches`.`branch_id` = `buildings`.`bldid`
+                                            AND `branches`.`branch_id` = `buildings`.`branch_id`
                                             AND `branches`.`branch_id` = " . $branch_id;
                                             $result = $conn->query($sql);
 
