@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 12, 2022 lúc 04:42 PM
--- Phiên bản máy phục vụ: 10.4.22-MariaDB
--- Phiên bản PHP: 8.0.14
+-- Host: 127.0.0.1
+-- Generation Time: May 13, 2022 at 04:26 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.0.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,12 +18,12 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `qldc`
+-- Database: `qldc`
 --
 
 DELIMITER $$
 --
--- Thủ tục
+-- Procedures
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `LoopDemo` ()  BEGIN
 DECLARE building_id  INT;
@@ -46,7 +46,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `apartments`
+-- Table structure for table `apartments`
 --
 
 CREATE TABLE `apartments` (
@@ -59,7 +59,7 @@ CREATE TABLE `apartments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `apartments`
+-- Dumping data for table `apartments`
 --
 
 INSERT INTO `apartments` (`aid`, `bldid`, `a_name`, `a_size`, `atype_id`, `r_status`) VALUES
@@ -75,7 +75,7 @@ INSERT INTO `apartments` (`aid`, `bldid`, `a_name`, `a_size`, `atype_id`, `r_sta
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `apartment_type`
+-- Table structure for table `apartment_type`
 --
 
 CREATE TABLE `apartment_type` (
@@ -89,7 +89,7 @@ CREATE TABLE `apartment_type` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `apartment_type`
+-- Dumping data for table `apartment_type`
 --
 
 INSERT INTO `apartment_type` (`atype_id`, `branch_id`, `atype_name`, `atype_area`, `atype_acreage`, `atype_style`, `atype_des`) VALUES
@@ -106,7 +106,7 @@ INSERT INTO `apartment_type` (`atype_id`, `branch_id`, `atype_name`, `atype_area
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `bills`
+-- Table structure for table `bills`
 --
 
 CREATE TABLE `bills` (
@@ -117,7 +117,7 @@ CREATE TABLE `bills` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `bills`
+-- Dumping data for table `bills`
 --
 
 INSERT INTO `bills` (`bill_id`, `aid`, `total`, `bill_paydate`) VALUES
@@ -128,7 +128,7 @@ INSERT INTO `bills` (`bill_id`, `aid`, `total`, `bill_paydate`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `branches`
+-- Table structure for table `branches`
 --
 
 CREATE TABLE `branches` (
@@ -137,7 +137,7 @@ CREATE TABLE `branches` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `branches`
+-- Dumping data for table `branches`
 --
 
 INSERT INTO `branches` (`branch_id`, `branch_name`) VALUES
@@ -148,7 +148,7 @@ INSERT INTO `branches` (`branch_id`, `branch_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `buildings`
+-- Table structure for table `buildings`
 --
 
 CREATE TABLE `buildings` (
@@ -161,7 +161,7 @@ CREATE TABLE `buildings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `buildings`
+-- Dumping data for table `buildings`
 --
 
 INSERT INTO `buildings` (`bldid`, `branch_id`, `ownid`, `bld_name`, `bld_address`, `bld_image`) VALUES
@@ -178,7 +178,7 @@ INSERT INTO `buildings` (`bldid`, `branch_id`, `ownid`, `bld_name`, `bld_address
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `complains`
+-- Table structure for table `complains`
 --
 
 CREATE TABLE `complains` (
@@ -190,7 +190,7 @@ CREATE TABLE `complains` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `complains`
+-- Dumping data for table `complains`
 --
 
 INSERT INTO `complains` (`cplid`, `aid`, `spl_subject`, `cpl_complain`, `cpl_date`) VALUES
@@ -200,7 +200,7 @@ INSERT INTO `complains` (`cplid`, `aid`, `spl_subject`, `cpl_complain`, `cpl_dat
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `contracts`
+-- Table structure for table `contracts`
 --
 
 CREATE TABLE `contracts` (
@@ -216,7 +216,7 @@ CREATE TABLE `contracts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `contracts`
+-- Dumping data for table `contracts`
 --
 
 INSERT INTO `contracts` (`ctrid`, `aid`, `rsdid`, `ctr_name`, `ctr_type`, `rent_fee`, `buy_fee`, `ctr_date`, `file_name`) VALUES
@@ -228,7 +228,7 @@ INSERT INTO `contracts` (`ctrid`, `aid`, `rsdid`, `ctr_name`, `ctr_type`, `rent_
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `owners`
+-- Table structure for table `owners`
 --
 
 CREATE TABLE `owners` (
@@ -241,7 +241,7 @@ CREATE TABLE `owners` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `owners`
+-- Dumping data for table `owners`
 --
 
 INSERT INTO `owners` (`ownid`, `o_name`, `o_sex`, `o_phone`, `o_mail`, `o_image`) VALUES
@@ -252,7 +252,7 @@ INSERT INTO `owners` (`ownid`, `o_name`, `o_sex`, `o_phone`, `o_mail`, `o_image`
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `residents`
+-- Table structure for table `residents`
 --
 
 CREATE TABLE `residents` (
@@ -270,7 +270,7 @@ CREATE TABLE `residents` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `residents`
+-- Dumping data for table `residents`
 --
 
 INSERT INTO `residents` (`rsdid`, `bldid`, `aid`, `rsd_name`, `rsd_identity`, `rsd_phone`, `rsd_mail`, `rsd_sex`, `rsd_dob`, `rsd_relationship`, `rsd_image`) VALUES
@@ -286,7 +286,7 @@ INSERT INTO `residents` (`rsdid`, `bldid`, `aid`, `rsd_name`, `rsd_identity`, `r
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -298,7 +298,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Đang đổ dữ liệu cho bảng `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `user_mail`, `user_name`, `user_pass`, `role`) VALUES
@@ -308,7 +308,7 @@ INSERT INTO `user` (`id`, `user_mail`, `user_name`, `user_pass`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `utilities`
+-- Table structure for table `utilities`
 --
 
 CREATE TABLE `utilities` (
@@ -317,7 +317,7 @@ CREATE TABLE `utilities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `utilities`
+-- Dumping data for table `utilities`
 --
 
 INSERT INTO `utilities` (`utltid`, `utlt_name`) VALUES
@@ -330,7 +330,7 @@ INSERT INTO `utilities` (`utltid`, `utlt_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `utilities_building`
+-- Table structure for table `utilities_building`
 --
 
 CREATE TABLE `utilities_building` (
@@ -342,7 +342,7 @@ CREATE TABLE `utilities_building` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `utilities_building`
+-- Dumping data for table `utilities_building`
 --
 
 INSERT INTO `utilities_building` (`utlt_bld_id`, `bldid`, `utltid`, `utlt_cost`, `register`) VALUES
@@ -393,153 +393,153 @@ INSERT INTO `utilities_building` (`utlt_bld_id`, `bldid`, `utltid`, `utlt_cost`,
 (55, 9, 5, 0, 0);
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `apartments`
+-- Indexes for table `apartments`
 --
 ALTER TABLE `apartments`
   ADD PRIMARY KEY (`aid`);
 
 --
--- Chỉ mục cho bảng `apartment_type`
+-- Indexes for table `apartment_type`
 --
 ALTER TABLE `apartment_type`
   ADD PRIMARY KEY (`atype_id`);
 
 --
--- Chỉ mục cho bảng `bills`
+-- Indexes for table `bills`
 --
 ALTER TABLE `bills`
   ADD PRIMARY KEY (`bill_id`);
 
 --
--- Chỉ mục cho bảng `branches`
+-- Indexes for table `branches`
 --
 ALTER TABLE `branches`
   ADD PRIMARY KEY (`branch_id`);
 
 --
--- Chỉ mục cho bảng `buildings`
+-- Indexes for table `buildings`
 --
 ALTER TABLE `buildings`
   ADD PRIMARY KEY (`bldid`);
 
 --
--- Chỉ mục cho bảng `complains`
+-- Indexes for table `complains`
 --
 ALTER TABLE `complains`
   ADD PRIMARY KEY (`cplid`);
 
 --
--- Chỉ mục cho bảng `contracts`
+-- Indexes for table `contracts`
 --
 ALTER TABLE `contracts`
   ADD PRIMARY KEY (`ctrid`);
 
 --
--- Chỉ mục cho bảng `owners`
+-- Indexes for table `owners`
 --
 ALTER TABLE `owners`
   ADD PRIMARY KEY (`ownid`);
 
 --
--- Chỉ mục cho bảng `residents`
+-- Indexes for table `residents`
 --
 ALTER TABLE `residents`
   ADD PRIMARY KEY (`rsdid`);
 
 --
--- Chỉ mục cho bảng `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `utilities`
+-- Indexes for table `utilities`
 --
 ALTER TABLE `utilities`
   ADD PRIMARY KEY (`utltid`);
 
 --
--- Chỉ mục cho bảng `utilities_building`
+-- Indexes for table `utilities_building`
 --
 ALTER TABLE `utilities_building`
   ADD PRIMARY KEY (`utlt_bld_id`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `apartments`
+-- AUTO_INCREMENT for table `apartments`
 --
 ALTER TABLE `apartments`
   MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT cho bảng `apartment_type`
+-- AUTO_INCREMENT for table `apartment_type`
 --
 ALTER TABLE `apartment_type`
   MODIFY `atype_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT cho bảng `bills`
+-- AUTO_INCREMENT for table `bills`
 --
 ALTER TABLE `bills`
   MODIFY `bill_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT cho bảng `branches`
+-- AUTO_INCREMENT for table `branches`
 --
 ALTER TABLE `branches`
   MODIFY `branch_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT cho bảng `buildings`
+-- AUTO_INCREMENT for table `buildings`
 --
 ALTER TABLE `buildings`
   MODIFY `bldid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT cho bảng `complains`
+-- AUTO_INCREMENT for table `complains`
 --
 ALTER TABLE `complains`
   MODIFY `cplid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT cho bảng `contracts`
+-- AUTO_INCREMENT for table `contracts`
 --
 ALTER TABLE `contracts`
   MODIFY `ctrid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT cho bảng `owners`
+-- AUTO_INCREMENT for table `owners`
 --
 ALTER TABLE `owners`
   MODIFY `ownid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT cho bảng `residents`
+-- AUTO_INCREMENT for table `residents`
 --
 ALTER TABLE `residents`
   MODIFY `rsdid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT cho bảng `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT cho bảng `utilities`
+-- AUTO_INCREMENT for table `utilities`
 --
 ALTER TABLE `utilities`
   MODIFY `utltid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT cho bảng `utilities_building`
+-- AUTO_INCREMENT for table `utilities_building`
 --
 ALTER TABLE `utilities_building`
   MODIFY `utlt_bld_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;

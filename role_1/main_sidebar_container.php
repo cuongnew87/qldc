@@ -16,6 +16,16 @@
     {
         if (strpos($_SERVER['REQUEST_URI'], $file_name)) echo 'menu-open';
     }
+
+    // Create connection
+    $conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $result = mysqli_query($conn, "SELECT * FROM residents WHERE rsd_mail = '" . $_SESSION['email'] . "'");
+    $data = mysqli_fetch_array($result);
 ?>
 
 <!-- Main Sidebar Container -->
@@ -31,7 +41,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="<?php echo WEB_URL ?>dist/img/tennants/user-default.png" class="img-circle elevation-2" alt="User Image" />
+                <img src="<?php echo WEB_URL ?>dist/img/tennants/<?php echo $data['rsd_image'] ?>" class="img-circle elevation-2" alt="User Image" />
             </div>
             <div class="info">
                 <a href="#" class="d-block"><?php echo $_SESSION['username']; ?></a>

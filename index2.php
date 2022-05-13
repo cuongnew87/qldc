@@ -123,7 +123,7 @@
                                 <div class="icon">
                                     <i class="ion ion-home"></i>
                                 </div>
-                                <a href="<?php echo WEB_URL ?>pages/tables/buildings.php?branch_id = 2"
+                                <a href="<?php echo WEB_URL ?>pages/tables/buildings.php?branch_id=2"
                                     class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
