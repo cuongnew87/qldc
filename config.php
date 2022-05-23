@@ -1,8 +1,8 @@
 <?php
 define('_AMSCODESECURITY', '16343942');
 define('CURRENCY', '$');
-define('WEB_URL', 'https://site.test/QLDC_khiem/');
-define('ROOT_PATH', 'D:\xampp\htdocs/QLDC_khiem/');
+define('WEB_URL', 'http://localhost:8080/qldc/');
+define('ROOT_PATH', 'D:\xampp\htdocs/qldc/');
 
 
 define('DB_HOSTNAME', 'localhost');

@@ -23,7 +23,7 @@
     <!-- Brand Logo -->
     <a href="index.php" class="brand-link">
         <img src="<?php echo WEB_URL ?>dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">Administrator</span>
     </a>
 
     <!-- Sidebar -->
@@ -31,7 +31,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="<?php echo WEB_URL ?>dist/img/tennants/user-default.png" class="img-circle elevation-2" alt="User Image" />
+                <img src="<?php echo WEB_URL ?>dist/img/tennants/user-default1.png" class="img-circle elevation-2" alt="User Image" />
             </div>
             <div class="info">
                 <a href="#" class="d-block"><?php echo $_SESSION['username']; ?></a>
@@ -110,6 +110,12 @@
                             <a href="<?php echo WEB_URL ?>pages/tables/contracts.php" class="nav-link <?php activeLi('pages/tables/contracts.php') ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Hợp đồng</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?php echo WEB_URL ?>pages/tables/accounts.php" class="nav-link <?php activeLi('pages/tables/contracts.php') ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Quản lý tài khoản</p>
                             </a>
                         </li>
                     </ul>

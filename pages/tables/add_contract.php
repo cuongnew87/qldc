@@ -30,6 +30,10 @@ $sql2 = "UPDATE apartments SET r_status = 1 WHERE aid = " . $apartmentId;
 
 $result2 = $conn->query($sql2);
 
+$sql2 = "UPDATE apartments SET r_status = 1 WHERE aid = " . $apartmentId;
+
+$result2 = $conn->query($sql2);
+
 if ($result1){
     echo json_encode(array("statusCode" => 200));
 } else {

@@ -351,7 +351,7 @@
 
         fileEdited = null;
         fileName = null;
-        location.reload();
+        // location.reload();
     }
     </script>
 </body>

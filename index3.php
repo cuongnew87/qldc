@@ -123,7 +123,7 @@
                                 <div class="icon">
                                     <i class="ion ion-home"></i>
                                 </div>
-                                <a href="<?php echo WEB_URL ?>pages/tables/buildings.php?branch_id = 2"
+                                <a href="<?php echo WEB_URL ?>pages/tables/buildings.php?branch_id=2"
                                     class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -180,33 +180,33 @@
                     <!-- /.row -->
                     <!-- Main row -->
                     <div class="row">
-                            <!-- Left col -->
-                            <section class="col-lg-7 connectedSortable">
-                                <!-- DIRECT CHAT -->
-                                <div class="card direct-chat direct-chat-primary direct-chat-contacts-open">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Phản hồi của người thuê</h3>
+                        <!-- Left col -->
+                        <section class="col-lg-7 connectedSortable">
+                            <!-- DIRECT CHAT -->
+                            <div class="card direct-chat direct-chat-primary direct-chat-contacts-open">
+                                <div class="card-header">
+                                    <h3 class="card-title">Phản hồi của người thuê</h3>
 
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </div>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
                                     </div>
-                                    <!-- /.card-header -->
-                                    <div class="card-body">
-                                        <!-- Conversations are loaded here -->
-                                        <div class="direct-chat-messages">
-                                        </div>
-                                        <!--/.direct-chat-messages-->
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <!-- Conversations are loaded here -->
+                                    <div class="direct-chat-messages">
+                                    </div>
+                                    <!--/.direct-chat-messages-->
 
-                                        <!-- Contacts are loaded here -->
-                                        <div class="direct-chat-contacts">
-                                            <ul class="contacts-list">
-                                                <?php
+                                    <!-- Contacts are loaded here -->
+                                    <div class="direct-chat-contacts">
+                                        <ul class="contacts-list">
+                                            <?php
                                                     $sql = "SELECT * FROM complains, buildings, apartments WHERE buildings.bldid = apartments.bldid AND complains.aid = apartments.aid AND branch_id = 2 LIMIT 10";
                                                     $result = $conn->query($sql);
                                     
@@ -214,36 +214,38 @@
                                                         // output data of each row
                                                         while ($row = $result->fetch_assoc()) {
                                                             ?>
-                                                <li>
-                                                    <a href="#">
-                                                        <img class="contacts-list-img" src="<?php echo WEB_URL ?>dist/img/tennants/user-default.png"
-                                                            alt="User Avatar" />
+                                            <li>
+                                                <a href="#">
+                                                    <img class="contacts-list-img"
+                                                        src="<?php echo WEB_URL ?>dist/img/tennants/user-default.png"
+                                                        alt="User Avatar" />
 
-                                                        <div class="contacts-list-info">
-                                                            <span class="contacts-list-name">
-                                                                <?php echo $row['a_name'] ?>
-                                                                <small
-                                                                    class="contacts-list-date float-right"><?php echo $row['cpl_date'] ?></small>
-                                                            </span>
-                                                            <span class="contacts-list-msg"><?php echo $row['cpl_complain'] ?></span>
-                                                        </div>
-                                                        <!-- /.contacts-list-info -->
-                                                    </a>
-                                                </li>
-                                                <?php
+                                                    <div class="contacts-list-info">
+                                                        <span class="contacts-list-name">
+                                                            <?php echo $row['a_name'] ?>
+                                                            <small
+                                                                class="contacts-list-date float-right"><?php echo $row['cpl_date'] ?></small>
+                                                        </span>
+                                                        <span
+                                                            class="contacts-list-msg"><?php echo $row['cpl_complain'] ?></span>
+                                                    </div>
+                                                    <!-- /.contacts-list-info -->
+                                                </a>
+                                            </li>
+                                            <?php
                                                         }
                                                     }
                                                 ?>
-                                            </ul>
-                                            <!-- /.contacts-list -->
-                                        </div>
-                                        <!-- /.direct-chat-pane -->
+                                        </ul>
+                                        <!-- /.contacts-list -->
                                     </div>
+                                    <!-- /.direct-chat-pane -->
                                 </div>
-                                <!--/.direct-chat -->
-                                <!-- /.card -->
-                            </section>
-                            <!-- /.Left col -->
+                            </div>
+                            <!--/.direct-chat -->
+                            <!-- /.card -->
+                        </section>
+                        <!-- /.Left col -->
                         <!-- right col (We are only adding the ID to make the widgets sortable)-->
                         <section class="col-lg-5 connectedSortable">
 
@@ -325,4 +327,5 @@
     <script src="<?php echo WEB_URL ?>dist/js/pages/dashboard.js"></script>
 </body>
 <?php $conn->close(); ?>
+
 </html>

@@ -206,26 +206,26 @@ $data = mysqli_fetch_array($result);
                     <div class="tab-pane" id="settings">
                       <div class="form-horizontal">
                         <div class="form-group row">
-                          <label for="name" class="col-sm-2 col-form-label">Họ và tên</label>
-                          <div class="col-sm-10">
+                          <label for="name" class="col-sm-3 col-form-label">Họ và tên</label>
+                          <div class="col-sm-9">
                             <input type="text" class="form-control" id="name" placeholder="Họ và tên" value="<?php echo $data['rsd_name']; ?>" autocomplete="off">
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="email" class="col-sm-2 col-form-label">Email</label>
-                          <div class="col-sm-10">
+                          <label for="email" class="col-sm-3 col-form-label">Email</label>
+                          <div class="col-sm-9">
                             <input type="email" class="form-control" id="email" placeholder="Email" value="<?php echo $data['rsd_mail']; ?>" autocomplete="off">
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
-                          <div class="col-sm-10">
+                          <label for="phone" class="col-sm-3 col-form-label">Số điện thoại</label>
+                          <div class="col-sm-9">
                             <input type="text" class="form-control" id="phone" placeholder="Số điện thoại" value="<?php echo $data['rsd_phone']; ?>" autocomplete="off">
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="inputExperience" class="col-sm-2 col-form-label">Giới tính</label>
-                          <div class="col-sm-10 d-flex">
+                          <label for="inputExperience" class="col-sm-3 col-form-label">Giới tính</label>
+                          <div class="col-sm-9 d-flex">
                             <div class="form-check m-1">
                               <input class="form-check-input" type="radio" name="gender" value="Nam" <?php if ($data['rsd_sex'] == "Nam") echo "checked" ?>>
                               <label class="form-check-label">Nam</label>
@@ -237,13 +237,13 @@ $data = mysqli_fetch_array($result);
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="identity" class="col-sm-2 col-form-label">Số căn cước</label>
-                          <div class="col-sm-10">
+                          <label for="identity" class="col-sm-3 col-form-label">Số căn cước</label>
+                          <div class="col-sm-9">
                             <input type="text" class="form-control" id="identity" placeholder="Số căn cước" value="<?php echo $data['rsd_identity']; ?>">
                           </div>
                         </div>
                         <div class="form-group row">
-                          <div class="offset-sm-2 col-sm-10">
+                          <div class="offset-sm-2 col-sm-9">
                             <button type="button" class="btn btn-danger" onclick="updateInfo(<?php echo $tennant_id ?>)">Cập nhật thông tin</button>
                           </div>
                         </div>
