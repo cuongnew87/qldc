@@ -138,7 +138,7 @@
                         <li class="nav-item">
                             <a href="<?php echo WEB_URL ?>pages/reports/rentals.php" class="nav-link <?php activeLi('pages/reports/rentals.php') ?>">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Chi phí</p>
+                                <p>Hóa đơn</p>
                             </a>
                         </li>
                     </ul>

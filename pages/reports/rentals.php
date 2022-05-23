@@ -173,6 +173,19 @@
                                 <label for="date">Ngày trả</label>
                                 <input id="date" type="date" name="date" class="form-control" required>
                             </div>
+                            <div class="form-group">
+                                <label for="date">Ngày trả</label>
+                                <input id="date" type="date" name="date" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>File exel</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" style="cursor: pointer;" class="custom-file-input" ID="fileUpload" />
+                                        <label class="custom-file-label" id="file-name">Chọn file</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" onclick="addNewBill()">Thêm mới</button>
@@ -211,28 +224,141 @@
             });
         });
 
-        function addNewBill(){
-            $.ajax({
-                url: "add_rentals.php",
-                type: "POST",
-                data: {
-                    rentalApartment: document.getElementById("selectApartment").value,
-                    rentalDate: document.getElementById("date").value,
-                },
-                success: function(dataResult) {
-                    var result = JSON.parse(dataResult);
+        function addNewBill() {
 
-                    if (result.statusCode == 200) {
-                        location.reload();
-                        console.log("data edit successfully");
+            //Reference the FileUpload element.
+            var fileUpload = document.getElementById("fileUpload");
+
+            //Validate whether File is valid Excel file.
+            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx)$/;
+            if (regex.test(fileUpload.value.toLowerCase())) {
+                if (typeof(FileReader) != "undefined") {
+                    var reader = new FileReader();
+
+                    //For Browsers other than IE.
+                    if (reader.readAsBinaryString) {
+                        reader.onload = function(e) {
+                            GetTableFromExcel(e.target.result);
+                        };
+                        reader.readAsBinaryString(fileUpload.files[0]);
                     } else {
-                        console.log("data not added successfully");
-                        console.log(result);
+                        //For IE Browser.
+                        reader.onload = function(e) {
+                            var data = "";
+                            var bytes = new Uint8Array(e.target.result);
+                            for (var i = 0; i < bytes.byteLength; i++) {
+                                data += String.fromCharCode(bytes[i]);
+                            }
+                            GetTableFromExcel(data);
+                        };
+                        reader.readAsArrayBuffer(fileUpload.files[0]);
                     }
+                } else {
+                    alert("This browser does not support HTML5.");
                 }
-            });
+            } else {
+                alert("Please upload a valid Excel file.");
+            }
+
+            // $.ajax({
+            //     url: "add_rentals.php",
+            //     type: "POST",
+            //     data: {
+            //         rentalApartment: document.getElementById("selectApartment").value,
+            //         rentalDate: document.getElementById("date").value,
+            //     },
+            //     success: function(dataResult) {
+            //         var result = JSON.parse(dataResult);
+
+            //         if (result.statusCode == 200) {
+            //             location.reload();
+            //             console.log("data edit successfully");
+            //         } else {
+            //             console.log("data not added successfully");
+            //             console.log(result);
+            //         }
+            //     }
+            // });
         }
+
+        function GetTableFromExcel(data) {
+        //Read the Excel File data in binary
+        var workbook = XLSX.read(data, {
+            type: 'binary'
+        });
+ 
+        //get the name of First Sheet.
+        var Sheet = workbook.SheetNames[0];
+ 
+        //Read all rows from First Sheet into an JSON array.
+        var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[Sheet]);
+ 
+        //Create a HTML Table element.
+        var myTable  = document.createElement("table");
+        myTable.border = "1";
+ 
+        //Add the header row.
+        var row = myTable.insertRow(-1);
+ 
+        //Add the header cells.
+        var headerCell = document.createElement("TH");
+        headerCell.innerHTML = "Id";
+        row.appendChild(headerCell);
+ 
+        headerCell = document.createElement("TH");
+        headerCell.innerHTML = "Name";
+        row.appendChild(headerCell);
+ 
+        headerCell = document.createElement("TH");
+        headerCell.innerHTML = "Country";
+        row.appendChild(headerCell);
+        
+        headerCell = document.createElement("TH");
+        headerCell.innerHTML = "Age";
+        row.appendChild(headerCell);
+        
+        headerCell = document.createElement("TH");
+        headerCell.innerHTML = "Date";
+        row.appendChild(headerCell);
+         
+         headerCell = document.createElement("TH");
+        headerCell.innerHTML = "Gender";
+        row.appendChild(headerCell);
+ 
+ 
+        //Add the data rows from Excel file.
+        for (var i = 0; i < excelRows.length; i++) {
+            //Add the data row.
+            var row = myTable.insertRow(-1);
+ 
+            //Add the data cells.
+            var cell = row.insertCell(-1);
+            cell.innerHTML = excelRows[i].Id;
+ 
+            cell = row.insertCell(-1);
+            cell.innerHTML = excelRows[i].Name;
+ 
+            cell = row.insertCell(-1);
+            cell.innerHTML = excelRows[i].Country;
+            
+            cell = row.insertCell(-1);
+            cell.innerHTML = excelRows[i].Age;
+            
+            cell = row.insertCell(-1);
+            cell.innerHTML = excelRows[i].Date;
+            
+            cell = row.insertCell(-1);
+            cell.innerHTML = excelRows[i].Gender;
+        }
+        
+ 
+        var ExcelTable = document.getElementById("ExcelTable");
+        ExcelTable.innerHTML = "";
+        ExcelTable.appendChild(myTable);
+    };
     </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
 </body>
 
 </html>
