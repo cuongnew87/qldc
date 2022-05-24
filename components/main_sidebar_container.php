@@ -113,7 +113,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?php echo WEB_URL ?>pages/tables/accounts.php" class="nav-link <?php activeLi('pages/tables/contracts.php') ?>">
+                            <a href="<?php echo WEB_URL ?>pages/tables/accounts.php" class="nav-link <?php activeLi('pages/tables/accounts.php') ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Quản lý tài khoản</p>
                             </a>

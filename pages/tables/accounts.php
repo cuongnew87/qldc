@@ -98,8 +98,7 @@
                                                         <td><?php echo $row['user_mail']; ?></td>
                                                         <td><?php echo $row['user_pass']; ?></td>
                                                         <td>
-                                                            <a class="btn btn-success ams_btn_special" data-toggle="tooltip" href="<?php echo WEB_URL ?>pages/tables/detail/building.php?building_id=<?php echo $row['bldid']; ?>"><i class="fa fa-eye"></i></a>
-                                                            <a class="btn btn-danger ams_btn_special" data-toggle="tooltip" onclick="deleteFloor(12);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash"></i></a>
+                                                            <a class="btn btn-danger ams_btn_special" onclick="deleteAccount(<?php echo $row['id']; ?>);" data-original-title="Delete"><i class="fa fa-trash"></i></a>
                                                         </td>
                                                     </tr>
                                             <?php
@@ -146,12 +145,12 @@
                                 <input id="name" type="text" name="name" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="address">Địa chỉ</label>
-                                <input id="address" type="text" name="address" class="form-control">
+                                <label for="password">Mật khẩu</label>
+                                <input id="password" type="password" name="password" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="owner">Chủ sở hữu</label>
-                                <select name="owner" id="selectOwner" class="custom-select">
+                                <label for="residents">Chọn người dân</label>
+                                <select name="residents" id="selectResident" class="custom-select">
                                     <?php
                                     // Create connection
                                     $conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
@@ -160,62 +159,25 @@
                                         die("Connection failed: " . $conn->connect_error);
                                     }
 
-                                    $sql = "SELECT * FROM owners";
+                                    $sql = "SELECT * FROM residents";
                                     $result = $conn->query($sql);
 
                                     if ($result->num_rows > 0) {
                                         // output data of each row
                                         while ($row = $result->fetch_assoc()) {
                                     ?>
-                                            <option value="<?php echo $row['ownid'] ?>"><?php echo $row['o_name'] ?></option>
+                                        <option value="<?php echo $row['rsdid'] ?>"><?php echo $row['rsd_name'] ?></option>
                                     <?php
                                         }
                                     }
                                     $conn->close();
                                     ?>
                                 </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="branch">Chọn khu nhà</label>
-                                <select name="branch" id="selectBranchModel" class="custom-select">
-                                    <?php
-                                    // Create connection
-                                    $conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-                                    // Check connection
-                                    if ($conn->connect_error) {
-                                        die("Connection failed: " . $conn->connect_error);
-                                    }
-
-                                    $sql = "SELECT * FROM branches";
-                                    $result = $conn->query($sql);
-
-                                    if ($result->num_rows > 0) {
-                                        // output data of each row
-                                        while ($row = $result->fetch_assoc()) {
-                                    ?>
-                                            <option value="<?php echo $row['branch_id'] ?>"><?php echo $row['branch_name'] ?>
-                                            </option>
-                                    <?php
-                                        }
-                                    }
-                                    $conn->close();
-                                    ?>
-                                </select>
-
-                            </div>
-                            <div class="form-group">
-                                <label>Hình ảnh</label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" style="cursor: pointer;" class="custom-file-input" ID="FileUpload" onchange="readURL(this)" />
-                                        <label class="custom-file-label" id="file-name">Chọn hình ảnh</label>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                            <button type="button" class="btn btn-success" onclick="addNewBuilding()">Thêm mới</button>
+                            <button type="button" class="btn btn-success" onclick="addNewAccount()">Thêm mới</button>
                         </div>
                     </div>
                 </div>
@@ -251,41 +213,16 @@
             });
         });
 
-        function changeBranch() {
-            var selectBranch = document.getElementById("selectBranch");
-            var text = selectBranch.options[selectBranch.selectedIndex].text;
-            var value = selectBranch.options[selectBranch.selectedIndex].value;
-            document.getElementById("branchName").innerHTML = text;
-            window.location.replace("<?php echo WEB_URL ?>pages/tables/buildings.php?branch_id=" + value);
-        }
-
-
-        var fileName = 'building-default.png';
-        var file = null;
-
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                fileName = input.files[0].name;
-                file = input.files[0];
-
-                document.getElementById("file-name").innerHTML = input.files[0].name;
-            }
-        }
-
-        function addNewBuilding() {
+        function addNewAccount() {
 
             $.ajax({
-                url: "add_building.php",
+                url: "add_account.php",
                 type: "POST",
                 data: {
-                    buildingName: document.getElementById("name").value,
-                    buildingAddress: document.getElementById("address").value,
-                    buildingOwner: document.getElementById("selectOwner").value,
-                    buildingBranch: document.getElementById("selectBranchModel").value,
-                    buildingImage: fileName,
-
+                    residentMail: document.getElementById("name").value,
+                    residentName: document.getElementById("selectResident").innerHTML,
+                    residentPassword: document.getElementById("password").value,
+                    residentId: document.getElementById("selectResident").value,
                 },
                 success: function(dataResult) {
                     var result = JSON.parse(dataResult);
@@ -299,30 +236,28 @@
                 }
             });
 
-            if (file != null) {
-                //Post image to server
-                var form = new FormData();
-                form.append("image", file);
+            location.reload();
+        }
 
-                $.ajax({
-                    type: "POST",
-                    url: "upload_building_image.php",
-                    processData: false,
-                    mimeType: "multipart/form-data",
-                    contentType: false,
-                    data: form,
-                    success: function(response) {
-                        let result = JSON.parse(response);
+        function deleteAccount(id){
+            $.ajax({
+                url: "delete_account.php",
+                type: "POST",
+                data: {
+                    accountId: id,
+                },
+                success: function(dataResult) {
+                    var result = JSON.parse(dataResult);
+
+                    if (result.statusCode == 200) {
+                        console.log("data edit successfully");
+                    } else {
+                        console.log("data not added successfully");
                         console.log(result);
-                    },
-                    error: function(e) {
-                        console.log(e);
                     }
-                });
-            }
+                }
+            });
 
-            file = null;
-            fileName = null;
             location.reload();
         }
     </script>

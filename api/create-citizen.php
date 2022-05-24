@@ -34,7 +34,17 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $message = 'Đăng ký người dùng thành công';
         }
         else{
-            $message = 'Người dùng tồn tại';
+            $sql = "Select * from residents, apartments, contracts where contracts.aid = apartments.aid and contracts.rsdid = residents.rsdid and rsd_identity = '" . $decoded_datas[0] . "'";
+            $result = $conn->query($sql);
+            $message = 'Thông tin: ';
+            $index = 0;
+            while ($row = $result->fetch_assoc()) {
+                $index++;
+                $message .= ' -Tên căn hộ:' . $row['a_name'] . " -Loại hợp đồng:" . $row['ctr_type'];
+            }
+
+            $message = 'Sở hữu ' . $index . ' căn hộ ' . $message;
+            
         }
     }
 
