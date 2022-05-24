@@ -378,7 +378,8 @@
     <script>
         function exportTableToExcel(tableID, filename = '') {
             var downloadLink;
-            var dataType = 'application/vnd.ms-excel';
+            // var dataType = 'application/vnd.ms-excel;charset=utf-8';
+            var dataType = "text/xls;charset=utf-8,%EF%BB%BF" + encodeURI(dataType);
             var tableSelect = document.getElementById(tableID);
             var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
 
