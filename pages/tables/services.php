@@ -63,7 +63,7 @@
                                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" onclick="addNewService()">Thêm mới dịch vụ</button>
                                         </div>
                                         <div>
-                                        <button class="btn btn-success" onclick="exportTableToExcel('example1')">Xuất file exel</button>
+                                            <button class="btn btn-success" onclick="exportTableToExcel('example1')">Xuất file exel</button>
                                         </div>
 
                                     </div>
@@ -161,6 +161,24 @@
                             <button id="modalButton" type="button" class="btn btn-success" onclick="service()">Thêm mới</button>
                         </div>
                     </div>
+
+                    <hr style="width: 100%; background-color: black;" />
+                    <h4 style="text-align:center">Thêm bằng file exel</h4>
+                    <div class="modal-body" id="addServiceExel">
+                        <div class="modal-body">
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" style="cursor: pointer;" class="custom-file-input" ID="fileUpload" onclick="UploadProcess()" />
+                                    <label class="custom-file-label" id="file-name">Chọn file exel để nhập</label>
+                                </div>
+                                <input type="button" id="upload" value="Upload" onclick="UploadProcess()" />
+                            </div>
+                            <div id="ExcelTable"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="modalButton" type="button" class="btn btn-success" onclick="service()">Thêm mới hàng loạt</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -186,6 +204,112 @@
     <script src="<?php echo WEB_URL ?>plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
     <script src="<?php echo WEB_URL ?>plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <!-- Page specific script -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
+<script type="text/javascript">
+    function UploadProcess() {
+        //Reference the FileUpload element.
+        var fileUpload = document.getElementById("fileUpload");
+ 
+        //Validate whether File is valid Excel file.
+        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx)$/;
+        if (regex.test(fileUpload.value.toLowerCase())) {
+            if (typeof (FileReader) != "undefined") {
+                var reader = new FileReader();
+ 
+                //For Browsers other than IE.
+                if (reader.readAsBinaryString) {
+                    reader.onload = function (e) {
+                        GetTableFromExcel(e.target.result);
+                    };
+                    reader.readAsBinaryString(fileUpload.files[0]);
+                } else {
+                    //For IE Browser.
+                    reader.onload = function (e) {
+                        var data = "";
+                        var bytes = new Uint8Array(e.target.result);
+                        for (var i = 0; i < bytes.byteLength; i++) {
+                            data += String.fromCharCode(bytes[i]);
+                        }
+                        GetTableFromExcel(data);
+                    };
+                    reader.readAsArrayBuffer(fileUpload.files[0]);
+                }
+            } else {
+                alert("This browser does not support HTML5.");
+            }
+        } else {
+            alert("Please upload a valid Excel file.");
+        }
+    };
+    function GetTableFromExcel(data) {
+        //Read the Excel File data in binary
+        var workbook = XLSX.read(data, {
+            type: 'binary'
+        });
+ 
+        //get the name of First Sheet.
+        var Sheet = workbook.SheetNames[0];
+ 
+        //Read all rows from First Sheet into an JSON array.
+        var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[Sheet]);
+ 
+        //Create a HTML Table element.
+        var myTable  = document.createElement("table");
+        myTable.border = "1";
+ 
+        //Add the header row.
+        var row = myTable.insertRow(-1);
+ 
+        //Add the header cells.
+        var headerCell = document.createElement("TH");
+        headerCell.innerHTML = "STT";
+        row.appendChild(headerCell);
+ 
+        headerCell = document.createElement("TH");
+        headerCell.innerHTML = "Name";
+        row.appendChild(headerCell);
+ 
+ 
+        //Add the data rows from Excel file.
+        for (var i = 0; i < excelRows.length; i++) {
+            //Add the data row.
+            var row = myTable.insertRow(-1);
+ 
+            //Add the data cells.
+            var cell = row.insertCell(-1);
+            cell.innerHTML = excelRows[i].STT;
+ 
+            cell = row.insertCell(-1);
+            cell.innerHTML = excelRows[i].Name;
+
+            $.ajax({
+                url: "service.php",
+                type: "POST",
+                data: {
+                    serviceId: 0,
+                    serviceName: excelRows[i].Name,
+                },
+                success: function(dataResult) {
+                    var result = JSON.parse(dataResult);
+
+                    if (result.statusCode == 200) {
+                        location.reload();
+                        console.log("change data successfully");
+                    } else {
+                        console.log("data not added successfully");
+                        console.log(result);
+                    }
+                }
+            });
+        }
+        
+ 
+        var ExcelTable = document.getElementById("ExcelTable");
+        ExcelTable.innerHTML = "";
+        ExcelTable.appendChild(myTable);
+    };
+</script>
     <script>
         let service_id = 0;
         $(function() {
@@ -220,7 +344,7 @@
 
                     if (result.statusCode == 200) {
                         location.reload();
-                        console.log("change data successfully");                        
+                        console.log("change data successfully");
                     } else {
                         console.log("data not added successfully");
                         console.log(result);
@@ -229,7 +353,7 @@
             });
         }
 
-        function deleteService(){
+        function deleteService() {
             $.ajax({
                 url: "delete_service.php",
                 type: "POST",
@@ -242,7 +366,7 @@
 
                     if (result.statusCode == 200) {
                         location.reload();
-                        console.log("change data successfully");                        
+                        console.log("change data successfully");
                     } else {
                         console.log("data not added successfully");
                         console.log(result);
@@ -252,37 +376,37 @@
         }
     </script>
     <script>
-    function exportTableToExcel(tableID, filename = ''){
-    var downloadLink;
-    var dataType = 'application/vnd.ms-excel';
-    var tableSelect = document.getElementById(tableID);
-    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-    
-    // Specify file name
-    filename = filename?filename+'.xls':'excel_data.xls';
-    
-    // Create download link element
-    downloadLink = document.createElement("a");
-    
-    document.body.appendChild(downloadLink);
-    
-    if(navigator.msSaveOrOpenBlob){
-        var blob = new Blob(['\ufeff', tableHTML], {
-            type: dataType
-        });
-        navigator.msSaveOrOpenBlob( blob, filename);
-    }else{
-        // Create a link to the file
-        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-    
-        // Setting the file name
-        downloadLink.download = filename;
-        
-        //triggering the function
-        downloadLink.click();
-    }
-}
-</script>
+        function exportTableToExcel(tableID, filename = '') {
+            var downloadLink;
+            var dataType = 'application/vnd.ms-excel';
+            var tableSelect = document.getElementById(tableID);
+            var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+            // Specify file name
+            filename = filename ? filename + '.xls' : 'excel_data.xls';
+
+            // Create download link element
+            downloadLink = document.createElement("a");
+
+            document.body.appendChild(downloadLink);
+
+            if (navigator.msSaveOrOpenBlob) {
+                var blob = new Blob(['\ufeff', tableHTML], {
+                    type: dataType
+                });
+                navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                // Create a link to the file
+                downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+                // Setting the file name
+                downloadLink.download = filename;
+
+                //triggering the function
+                downloadLink.click();
+            }
+        }
+    </script>
 </body>
 
 </html>
